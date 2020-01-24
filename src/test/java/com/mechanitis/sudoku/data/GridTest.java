@@ -2,6 +2,7 @@ package com.mechanitis.sudoku.data;
 
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,6 +23,7 @@ class GridTest {
     }
 
     @Test
+    @Disabled("Not implemented")
     void should_have_exactly_81_cells() {
         fail("Not implemented");
     }
@@ -33,6 +35,7 @@ class GridTest {
 
     @Test
     @DisplayName("Should be able to get to a specific cell")
+    @Disabled("Not implemented")
     void shouldBeAbleToGetToASpecificCell() {
         //(maybe microtypes are useful for this?)
         Cell cell = grid.getCell(0, 0);
