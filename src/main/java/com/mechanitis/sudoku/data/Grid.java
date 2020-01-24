@@ -10,4 +10,8 @@ public class Grid {
     private void init() {
 
     }
+
+    public Cell getCell(int rowIndex, int columnIndex) {
+        return null;
+    }
 }

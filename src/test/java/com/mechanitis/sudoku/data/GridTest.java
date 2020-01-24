@@ -1,16 +1,17 @@
 package com.mechanitis.sudoku.data;
 
 
-import com.mechanitis.sudoku.data.Grid;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 class GridTest {
     private final Grid grid = new Grid();
 
-    @Test
+    @Test ()
+    @DisplayName("Grid should have nine rows")
     void should_have_nine_rows() {
         Assertions.assertEquals(9, grid.rows.length);
     }
@@ -29,9 +30,16 @@ class GridTest {
     // should be able to navigate to column from cell
     // should be able to view all items in a row
     // should be able to view all times in a column
-    // should be able to get to a specific cell (column, row) (maybe microtypes are useful for this?)
 
-    // each row should only have the numbers 1-9
+    @Test
+    @DisplayName("Should be able to get to a specific cell")
+    void shouldBeAbleToGetToASpecificCell() {
+        //(maybe microtypes are useful for this?)
+        Cell cell = grid.getCell(0, 0);
+
+        assertNotNull(cell);
+    }
+
     // each column should only have the numbers 1-9
     // each number (1-9) should appear 9 times in the grid
 

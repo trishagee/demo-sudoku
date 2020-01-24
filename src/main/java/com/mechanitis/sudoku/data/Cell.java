@@ -1,8 +1,20 @@
 package com.mechanitis.sudoku.data;
 
-public class Cell {
-    private int value;
-    private int position;
-    private Row row;
-    private Column column;
+class Cell {
+    private final int value;
+    private final int position = 0;
+    private final Row row = null;
+    private final Column column = null;
+
+    Cell(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public Row getRow() {
+        return null;
+    }
 }
