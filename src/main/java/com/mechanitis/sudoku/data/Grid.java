@@ -7,11 +7,13 @@ public class Grid {
     Row[] rows = new Row[9];
     Column[] columns = new Column[9];
 
-    private void init() {
-
+    public Grid() {
+        for (int i = 0; i < rows.length; i++) {
+            rows[i] = new Row();
+        }
     }
 
-    public Cell getCell(int rowIndex, int columnIndex) {
-        return null;
+    public Cell cellAt(int rowIndex, int columnIndex) {
+        return rows[rowIndex].cellAt(columnIndex);
     }
 }

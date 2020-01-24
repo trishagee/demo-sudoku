@@ -1,31 +1,23 @@
 package com.mechanitis.sudoku.data;
 
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GridTest {
     private final Grid grid = new Grid();
 
-    @Test ()
-    @DisplayName("Grid should have nine rows")
-    void should_have_nine_rows() {
-        Assertions.assertEquals(9, grid.rows.length);
+    @Test
+    @DisplayName("Should have nine rows")
+    void shouldHaveNineRows() {
+        assertEquals(9, grid.rows.length);
     }
 
     @Test
-    void should_have_nine_columns() {
-        Assertions.assertEquals(9, grid.columns.length);
-    }
-
-    @Test
-    @Disabled("Not implemented")
-    void should_have_exactly_81_cells() {
-        fail("Not implemented");
+    @DisplayName("Should have nine columns")
+    void shouldHaveNineColumns() {
+        assertEquals(9, grid.columns.length);
     }
 
     // should be able to navigate to row from cell
@@ -35,15 +27,53 @@ class GridTest {
 
     @Test
     @DisplayName("Should be able to get to a specific cell")
-    @Disabled("Not implemented")
     void shouldBeAbleToGetToASpecificCell() {
         //(maybe microtypes are useful for this?)
-        Cell cell = grid.getCell(0, 0);
-
+        Cell cell = grid.cellAt(0, 0);
         assertNotNull(cell);
     }
 
-    // each number (1-9) should appear 9 times in the grid
+    @Nested
+    @DisplayName("When the grid contains some values")
+    class WhenValuesExist {
+        private final int columnIndex = 3;
+        private final int value = 5;
+        private final int rowIndex = 7;
+
+        @BeforeEach
+        void setValueInOneRow() {
+            //don't think this should be visible!
+            grid.rows[7].changeCell().atPosition(columnIndex).toValue(value);
+        }
+
+        @Test
+        @DisplayName("Should get the correct existing value")
+        void getTheCorrectExistingValue() {
+            assertEquals(value, grid.cellAt(rowIndex, columnIndex).getValue());
+        }
+
+        @Nested
+        @DisplayName("Should allow ")
+        class ShouldAllow {
+            @Test
+            @DisplayName("a change to existing value")
+            @Disabled("not implemented")
+            void should() {
+                fail("Not implemented");
+            }
+        }
+
+        @Nested
+        @DisplayName("Should not allow ")
+        class ShouldNotAllow {
+            @Test
+            @DisplayName("??")
+            @Disabled("not implemented")
+            void shouldNot() {
+                fail("Not implemented");
+            }
+        }
+    }
 
 
     //ideas
