@@ -2,10 +2,7 @@ package com.mechanitis.sudoku.data;
 
 class Cell {
     private static final int EMPTY_VALUE = -1;
-
     private int value;
-    private final Row row = null;
-    private final Column column = null;
 
     Cell(int value) {
         validateValue(value);
@@ -18,10 +15,6 @@ class Cell {
 
     public int getValue() {
         return value;
-    }
-
-    public Row getRow() {
-        return null;
     }
 
     public boolean isEmpty() {

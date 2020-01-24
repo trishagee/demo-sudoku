@@ -1,6 +1,5 @@
 package com.mechanitis.sudoku.data;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -73,13 +72,4 @@ class CellTest {
         Cell cell = new Cell(3);
         assertEquals(3, cell.getValue());
     }
-
-    @Test
-    @DisplayName("Should be able to get its row")
-    @Disabled("Not implemented")
-    void shouldBeAbleToGetItsRow() {
-        Cell cell = new Cell(0);
-        assertNotNull(cell.getRow());
-    }
-
 }
