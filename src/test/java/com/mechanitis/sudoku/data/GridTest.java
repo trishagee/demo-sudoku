@@ -20,17 +20,22 @@ class GridTest {
         assertEquals(9, grid.columns.length);
     }
 
-    // should be able to navigate to row from cell
-    // should be able to navigate to column from cell
     // should be able to view all items in a row
     // should be able to view all times in a column
 
     @Test
-    @DisplayName("Should be able to get to a specific cell")
-    void shouldBeAbleToGetToASpecificCell() {
+    @DisplayName("Should be able to get a specific cell")
+    void shouldBeAbleToGetASpecificCell() {
         //(maybe microtypes are useful for this?)
         Cell cell = grid.cellAt(0, 0);
         assertNotNull(cell);
+    }
+
+    @Test
+    @DisplayName("Should be able to set the value of a specific cell")
+    void shouldBeAbleToSetTheValueOfASpecificCell() {
+        grid.changeCell().onRow(1).atPosition(3).toValue(5);
+        assertEquals(5, grid.cellAt(1, 3).getValue());
     }
 
     @Nested
@@ -42,8 +47,7 @@ class GridTest {
 
         @BeforeEach
         void setValueInOneRow() {
-            //don't think this should be visible!
-            grid.rows[7].changeCell().atPosition(columnIndex).toValue(value);
+            grid.changeCell().onRow(rowIndex).atPosition(columnIndex).toValue(value);
         }
 
         @Test
