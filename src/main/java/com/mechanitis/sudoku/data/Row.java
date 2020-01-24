@@ -8,6 +8,9 @@ class Row {
         for (int i = 0; i < cells.length; i++) {
             cells[i] = new Cell();
         }
+        //Cells are immutable so need to be replaced in this structure
+        //But... then we might mess up the useful use of references...
+        //so let's make them (limited) mutable
     }
 
     //package level util, currently for testing.
@@ -18,6 +21,10 @@ class Row {
     public Cell cellAt(int position) {
         validatePosition(position);
         return cells[position];
+    }
+
+    public Mutator changeCell() {
+        return new Mutator();
     }
 
     private void validatePosition(int position) {
@@ -42,6 +49,19 @@ class Row {
 
         Cell build() {
             return new Cell(value);
+        }
+    }
+
+    class Mutator {
+        private Cell cell;
+
+        Mutator atPosition(int position) {
+            cell = cells[position];
+            return this;
+        }
+
+        public Cell toValue(int value) {
+            return cell;
         }
     }
 }

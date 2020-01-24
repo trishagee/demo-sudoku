@@ -37,19 +37,17 @@ class RowTest {
 
     @Test
     @DisplayName("Should be able to set a value at a given position")
-    @Disabled("Not implemented")
     void shouldBeAbleToSetAValueAtAGivenPosition() {
         // given
-        int expectedPosition = 3;
         int expectedValue = 5;
         Row row = new Row();
 
         // when
-//        Cell cell = row.cellAt(expectedPosition).hasValue(expectedValue).build();
+        Cell cell = row.cellAt(3);
+        cell.setValue(expectedValue);
 
         // then
-//        assertEquals(expectedPosition, cell.getPosition());
-//        assertEquals(expectedValue, cell.getValue());
+        assertEquals(expectedValue, cell.getValue());
     }
 
     @Test
