@@ -1,6 +1,7 @@
-package com.mechanitis.sudoku;
+package com.mechanitis.sudoku.data;
 
 
+import com.mechanitis.sudoku.data.Grid;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
