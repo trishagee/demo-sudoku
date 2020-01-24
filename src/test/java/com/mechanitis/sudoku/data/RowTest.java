@@ -1,7 +1,8 @@
 package com.mechanitis.sudoku.data;
 
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -50,12 +51,51 @@ class RowTest {
         assertEquals(expectedValue, cell.getValue());
     }
 
-    @Test
-    @DisplayName("Should not allow duplicate values in a row")
-    @Disabled("Not implemented")
-    void shouldNotAllowDuplicateValuesInARow() {
-        Row row = new Row();
-//        row.cellAt(3).hasValue(5);
+    @Nested
+    @DisplayName("When the row contains some values")
+    class WhenValuesExist {
+        private final int position = 3;
+        private final int value = 5;
+        // Subject
+        private final Row row = new Row();
+
+        @BeforeEach
+        void createRowWithOneValue() {
+            row.changeCell().atPosition(position).toValue(value);
+        }
+
+        @Nested
+        @DisplayName("Should allow ")
+        class ShouldAllow {
+            private final int newValue = 7;
+
+            @Test
+            @DisplayName("a change to existing value")
+            void shouldAllowAChangeToExistingValue() {
+                row.changeCell().atPosition(position).toValue(newValue);
+                assertEquals(newValue, row.cellAt(position).getValue());
+            }
+
+            @Test
+            @DisplayName("new unique values")
+            void shouldAllowNewUniqueValues() {
+                int differentPosition = position + 1;
+                row.changeCell().atPosition(differentPosition).toValue(newValue);
+                assertEquals(newValue, row.cellAt(differentPosition).getValue());
+            }
+        }
+
+        @Nested
+        @DisplayName("Should not allow ")
+        class ShouldNotAllow {
+            @Test
+            @DisplayName("duplicate values")
+            void shouldNotAllowDuplicateValues() {
+                assertThrows(InvalidValueException.class, () -> {
+                    row.changeCell().atPosition(position + 1).toValue(value);
+                });
+            }
+        }
     }
 
 }

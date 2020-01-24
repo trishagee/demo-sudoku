@@ -1,7 +1,12 @@
 package com.mechanitis.sudoku.data;
 
+import java.util.HashSet;
+import java.util.Set;
+
 class Row {
     private Cell[] cells = new Cell[9];
+    // needs to be kept in sync with the array of values
+    private Set<Integer> cellValues = new HashSet<>();
 
     public Row() {
         // profiling? iteration vs streams?
@@ -18,9 +23,13 @@ class Row {
         return cells.length;
     }
 
+    /**
+     * @param position the zero-indexed position of the desired Cell
+     * @return a copy of the Cell at this position
+     */
     public Cell cellAt(int position) {
         validatePosition(position);
-        return cells[position];
+        return Cell.copy(cells[position]);
     }
 
     public Mutator changeCell() {
@@ -33,25 +42,6 @@ class Row {
         }
     }
 
-    class Builder {
-        private int position;
-        private int value;
-
-        private Builder position(int position) {
-            this.position = position;
-            return this;
-        }
-
-        Builder hasValue(int value) {
-            this.value = value;
-            return this;
-        }
-
-        Cell build() {
-            return new Cell(value);
-        }
-    }
-
     class Mutator {
         private Cell cell;
 
@@ -60,8 +50,12 @@ class Row {
             return this;
         }
 
-        public Cell toValue(int value) {
-            return cell;
+        public void toValue(int value) {
+            if (cellValues.add(value)) {
+                cell.setValue(value);
+            } else {
+                throw new InvalidValueException("This is a duplicate");
+            }
         }
     }
 }

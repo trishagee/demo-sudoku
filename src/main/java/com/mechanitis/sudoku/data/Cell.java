@@ -4,7 +4,6 @@ class Cell {
     private static final int EMPTY_VALUE = -1;
 
     private int value;
-    private final int position = 0;
     private final Row row = null;
     private final Column column = null;
 
@@ -37,6 +36,16 @@ class Cell {
     private void validateValue(int value) {
         if (value < 1 || value > 9) {
             throw new InvalidValueException();
+        }
+    }
+
+    static Cell copy(Cell cell) {
+        if (cell.isEmpty()) {
+            // tried using a singleton empty cell, but that makes the logic of edits from empty to a value really
+            // complicated
+            return new Cell();
+        } else {
+            return new Cell(cell.value);
         }
     }
 }
