@@ -40,7 +40,6 @@ class GridTest {
         assertNotNull(cell);
     }
 
-    // each column should only have the numbers 1-9
     // each number (1-9) should appear 9 times in the grid
 
 
