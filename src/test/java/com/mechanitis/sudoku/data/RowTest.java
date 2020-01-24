@@ -64,6 +64,12 @@ class RowTest {
             row.changeCell().atPosition(position).toValue(value);
         }
 
+        @Test
+        @DisplayName("Should get the correct existing value")
+        void getTheCorrectExistingValue() {
+            assertEquals(value, row.cellAt(position).getValue());
+        }
+
         @Nested
         @DisplayName("Should allow ")
         class ShouldAllow {
