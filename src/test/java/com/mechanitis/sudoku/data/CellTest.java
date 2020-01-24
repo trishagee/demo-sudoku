@@ -40,6 +40,33 @@ class CellTest {
         }
     }
 
+    @Nested
+    @DisplayName("When changing a cell")
+    class WhenChanging {
+
+        @DisplayName("this value should be valid")
+        @ParameterizedTest(name = "{0}")
+        @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
+        void isValid(int value) {
+            // given
+            Cell cell = new Cell();
+
+            // when
+            cell.setValue(value);
+
+            // then
+            assertFalse(cell.isEmpty());
+            assertEquals(value, cell.getValue());
+        }
+
+        @DisplayName("this value should not be allowed")
+        @ParameterizedTest(name = "{0}")
+        @ValueSource(ints = {-1, 0, 10, 7837843})
+        void isNotValid(int value) {
+            assertThrows(InvalidValueException.class, () -> new Cell().setValue(value));
+        }
+    }
+
     @Test
     @DisplayName("Should be able to get a value from a cell")
     void shouldBeAbleToGetAValueFromACell() {

@@ -3,7 +3,7 @@ package com.mechanitis.sudoku.data;
 class Cell {
     private static final int EMPTY_VALUE = -1;
 
-    private final int value;
+    private int value;
     private final int position = 0;
     private final Row row = null;
     private final Column column = null;
@@ -27,6 +27,11 @@ class Cell {
 
     public boolean isEmpty() {
         return value == EMPTY_VALUE;
+    }
+
+    void setValue(int value) {
+        validateValue(value);
+        this.value = value;
     }
 
     private void validateValue(int value) {
