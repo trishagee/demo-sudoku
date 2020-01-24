@@ -1,6 +1,9 @@
 package com.mechanitis.sudoku.data;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -16,13 +19,6 @@ class CellTest {
         assertTrue(cell.isEmpty());
     }
 
-    @Test
-    @DisplayName("Should only allow values 1 to 9")
-    void shouldOnlyAllowTheNumbers1To9() {
-        // TODO this is a horrible test
-        assertThrows(InvalidValueException.class, () -> new Cell(11));
-    }
-
     @Nested
     @DisplayName("When creating a new cell")
     class WhenNew {
@@ -35,8 +31,14 @@ class CellTest {
             assertFalse(cell.isEmpty());
             assertEquals(value, cell.getValue());
         }
-    }
 
+        @DisplayName("this value should not be allowed")
+        @ParameterizedTest(name = "{0}")
+        @ValueSource(ints = {-1, 0, 10, 7837843})
+        void isNotValid(int value) {
+            assertThrows(InvalidValueException.class, () -> new Cell(value));
+        }
+    }
 
     @Test
     @DisplayName("Should be able to get a value from a cell")
