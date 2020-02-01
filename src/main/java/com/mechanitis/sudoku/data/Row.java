@@ -1,7 +1,9 @@
 package com.mechanitis.sudoku.data;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
 class Row {
     private final Cell[] cells = new Cell[9];
@@ -46,6 +48,12 @@ class Row {
 
     public Mutator changeCell() {
         return new Mutator();
+    }
+
+
+    public Stream<Cell> stream() {
+//        return StreamSupport.stream(spliterator(), false);
+        return Arrays.stream(cells);
     }
 
     private void validatePosition(int position) {

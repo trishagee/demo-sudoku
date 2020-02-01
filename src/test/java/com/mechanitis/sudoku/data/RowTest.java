@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -109,8 +112,6 @@ class RowTest {
     @Nested
     @DisplayName("When the row is full of values")
     class WhenRowIsPopulated {
-        private final int position = 3;
-        private final int value = 5;
         // Subject
         private final Row row = new Row(2, 5, 3, 4, 9, 8, 1, 7, 6);
 
@@ -126,6 +127,15 @@ class RowTest {
             assertEquals(1, row.cellAt(6).getValue());
             assertEquals(7, row.cellAt(7).getValue());
             assertEquals(6, row.cellAt(8).getValue());
+        }
+
+        @Test
+        @DisplayName("Should be able to stream the values in a row")
+        void shouldBeAbleToStreamTheValuesInARow() {
+            List<Integer> cells = row.stream()
+                                     .map(Cell::getValue)
+                                     .collect(Collectors.toUnmodifiableList());
+            assertEquals(List.of(2, 5, 3, 4, 9, 8, 1, 7, 6), cells);
         }
     }
 
