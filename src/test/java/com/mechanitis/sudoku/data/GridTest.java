@@ -2,21 +2,12 @@ package com.mechanitis.sudoku.data;
 
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
-
-import java.util.Arrays;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class GridTest {
     private final Grid grid = new Grid();
@@ -33,9 +24,6 @@ class GridTest {
         assertEquals(9, grid.columns.length);
     }
 
-    // should be able to view all items in a row
-    // should be able to view all times in a column
-
     @Test
     @DisplayName("Should be able to get a specific cell")
     void shouldBeAbleToGetASpecificCell() {
@@ -49,23 +37,6 @@ class GridTest {
     void shouldBeAbleToSetTheValueOfASpecificCell() {
         grid.changeCell().onRow(1).atPosition(3).toValue(5);
         assertEquals(5, grid.cellAt(1, 3).getValue());
-    }
-
-    @DisplayName("Should be able to see all the values in a given row")
-    @ParameterizedTest(name = "{0}")
-    @ValueSource(ints = {2, 5, 3, 1, 4, 9, 8, 7, 6})
-    @MethodSource("stringIntAndListProvider")
-    @Disabled("WIP")
-    void shouldBeAbleToSeeAllTheValuesInAGivenRow(int value) {
-        grid.changeCell().onRow(1).atPosition(3).toValue(5);
-        assertEquals(5, grid.cellAt(1, 3).getValue());
-    }
-
-    static Stream<Arguments> stringIntAndListProvider() {
-        return Stream.of(
-                arguments("apple", 1, Arrays.asList("a", "b")),
-                arguments("lemon", 2, Arrays.asList("x", "y"))
-        );
     }
 
     @Nested
