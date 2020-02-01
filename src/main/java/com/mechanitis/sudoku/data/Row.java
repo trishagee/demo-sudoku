@@ -4,11 +4,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 class Row {
-    private Cell[] cells = new Cell[9];
+    private final Cell[] cells = new Cell[9];
     // needs to be kept in sync with the array of values
-    private Set<Integer> cellValues = new HashSet<>();
+    private final Set<Integer> cellValues = new HashSet<>();
 
-    public Row() {
+    Row() {
         // profiling? iteration vs streams?
         for (int i = 0; i < cells.length; i++) {
             cells[i] = new Cell();
@@ -16,6 +16,18 @@ class Row {
         //Cells are immutable so need to be replaced in this structure
         //But... then we might mess up the useful use of references...
         //so let's make them (limited) mutable
+    }
+
+    Row(int i0, int i1, int i2, int i3, int i4, int i5, int i6, int i7, int i8) {
+        cells[0] = new Cell(i0);
+        cells[1] = new Cell(i1);
+        cells[2] = new Cell(i2);
+        cells[3] = new Cell(i3);
+        cells[4] = new Cell(i4);
+        cells[5] = new Cell(i5);
+        cells[6] = new Cell(i6);
+        cells[7] = new Cell(i7);
+        cells[8] = new Cell(i8);
     }
 
     //package level util, currently for testing.

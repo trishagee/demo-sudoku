@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RowTest {
 
@@ -52,8 +54,8 @@ class RowTest {
     }
 
     @Nested
-    @DisplayName("When the row contains some values")
-    class WhenValuesExist {
+    @DisplayName("When the row contains a value")
+    class WhenValueExists {
         private final int position = 3;
         private final int value = 5;
         // Subject
@@ -101,6 +103,29 @@ class RowTest {
                     row.changeCell().atPosition(position + 1).toValue(value);
                 });
             }
+        }
+    }
+
+    @Nested
+    @DisplayName("When the row is full of values")
+    class WhenRowIsPopulated {
+        private final int position = 3;
+        private final int value = 5;
+        // Subject
+        private final Row row = new Row(2, 5, 3, 4, 9, 8, 1, 7, 6);
+
+        @Test
+        @DisplayName("Should be able to see all the values in a given row")
+        void shouldBeAbleToSeeAllTheValuesInAGivenRow() {
+            assertEquals(2, row.cellAt(0).getValue());
+            assertEquals(5, row.cellAt(1).getValue());
+            assertEquals(3, row.cellAt(2).getValue());
+            assertEquals(4, row.cellAt(3).getValue());
+            assertEquals(9, row.cellAt(4).getValue());
+            assertEquals(8, row.cellAt(5).getValue());
+            assertEquals(1, row.cellAt(6).getValue());
+            assertEquals(7, row.cellAt(7).getValue());
+            assertEquals(6, row.cellAt(8).getValue());
         }
     }
 

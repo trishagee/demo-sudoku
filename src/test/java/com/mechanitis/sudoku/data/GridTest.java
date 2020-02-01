@@ -46,7 +46,6 @@ class GridTest {
 
     @Test
     @DisplayName("Should be able to set the value of a specific cell")
-    @Disabled("WIP")
     void shouldBeAbleToSetTheValueOfASpecificCell() {
         grid.changeCell().onRow(1).atPosition(3).toValue(5);
         assertEquals(5, grid.cellAt(1, 3).getValue());
@@ -56,6 +55,7 @@ class GridTest {
     @ParameterizedTest(name = "{0}")
     @ValueSource(ints = {2, 5, 3, 1, 4, 9, 8, 7, 6})
     @MethodSource("stringIntAndListProvider")
+    @Disabled("WIP")
     void shouldBeAbleToSeeAllTheValuesInAGivenRow(int value) {
         grid.changeCell().onRow(1).atPosition(3).toValue(5);
         assertEquals(5, grid.cellAt(1, 3).getValue());
