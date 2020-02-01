@@ -8,11 +8,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class RowTest {
 
@@ -112,6 +114,7 @@ class RowTest {
     @Nested
     @DisplayName("When the row is full of values")
     class WhenRowIsPopulated {
+        private final List<Integer> expectedValues = List.of(2, 5, 3, 4, 9, 8, 1, 7, 6);
         // Subject
         private final Row row = new Row(2, 5, 3, 4, 9, 8, 1, 7, 6);
 
@@ -132,10 +135,29 @@ class RowTest {
         @Test
         @DisplayName("Should be able to stream the values in a row")
         void shouldBeAbleToStreamTheValuesInARow() {
-            List<Integer> cells = row.stream()
-                                     .map(Cell::getValue)
-                                     .collect(Collectors.toUnmodifiableList());
-            assertEquals(List.of(2, 5, 3, 4, 9, 8, 1, 7, 6), cells);
+            List<Integer> rowValues = row.stream()
+                                         .map(Cell::getValue)
+                                         .collect(Collectors.toUnmodifiableList());
+            assertEquals(expectedValues, rowValues);
+        }
+
+        @Test
+        @DisplayName("Should be able to iterate over the values in a row")
+        void shouldBeAbleToIterateOverTheValuesInARow() {
+            int index = 0;
+            for (Cell cell : row) {
+                assertEquals(expectedValues.get(index++), cell.getValue());
+            }
+        }
+
+        @Test
+        @DisplayName("Should be able to call forEach on a row")
+        void shouldBeAbleToCallForEachOnARow() {
+            AtomicInteger index = new AtomicInteger(0);
+            row.forEach(cell -> {
+                assertEquals(expectedValues.get(index.getAndIncrement()), cell.getValue());
+            });
+            assertEquals(9, index.get());
         }
     }
 

@@ -1,11 +1,15 @@
 package com.mechanitis.sudoku.data;
 
-import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
-class Row {
+class Row implements Iterable<Cell> {
     private final Cell[] cells = new Cell[9];
     // needs to be kept in sync with the array of values
     private final Set<Integer> cellValues = new HashSet<>();
@@ -52,8 +56,22 @@ class Row {
 
 
     public Stream<Cell> stream() {
-//        return StreamSupport.stream(spliterator(), false);
-        return Arrays.stream(cells);
+        return StreamSupport.stream(spliterator(), false);
+    }
+
+    @Override
+    public Iterator<Cell> iterator() {
+        return stream().iterator();
+    }
+
+    @Override
+    public void forEach(Consumer<? super Cell> action) {
+        stream().forEach(action);
+    }
+
+    @Override
+    public Spliterator<Cell> spliterator() {
+        return Spliterators.spliterator(cells, Spliterator.ORDERED);
     }
 
     private void validatePosition(int position) {
