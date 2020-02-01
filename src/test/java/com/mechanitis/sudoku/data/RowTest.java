@@ -9,28 +9,25 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toUnmodifiableList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 class RowTest {
 
     @Test
     @DisplayName("Should have exactly 9 cells")
     void shouldHaveExactly9Cells() {
-        Row row = new Row();
-        assertEquals(9, row.getLength());
+        assertEquals(9, new Row().getLength());
     }
 
     @DisplayName("Should be able to get a cell at any position from 0 to 8 inclusive")
     @ParameterizedTest(name = "{0}")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8})
     void shouldBeAbleToGetACellAtAnyValidPosition(int position) {
-        Row row = new Row();
-        Cell cell = row.cellAt(position);
+        Cell cell = new Row().cellAt(position);
         // this should be changed so we know we have the correct cell!
         assertTrue(cell.isEmpty());
     }
@@ -46,15 +43,10 @@ class RowTest {
     @Test
     @DisplayName("Should be able to set a value at a given position")
     void shouldBeAbleToSetAValueAtAGivenPosition() {
-        // given
         int expectedValue = 5;
-        Row row = new Row();
-
-        // when
-        Cell cell = row.cellAt(3);
+        Cell cell = new Row().cellAt(3);
         cell.setValue(expectedValue);
 
-        // then
         assertEquals(expectedValue, cell.getValue());
     }
 
@@ -99,7 +91,7 @@ class RowTest {
 
             @Test
             @DisplayName("removing a value from one cell and adding to another")
-            void shouldAllowRemovingAValueAndReadding() {
+            void shouldAllowRemovingAValueAndReading() {
                 int differentPosition = position + 1;
 
                 row.changeCell().atPosition(position).toEmpty();
@@ -115,9 +107,7 @@ class RowTest {
             @Test
             @DisplayName("duplicate values")
             void shouldNotAllowDuplicateValues() {
-                assertThrows(InvalidValueException.class, () -> {
-                    row.changeCell().atPosition(position + 1).toValue(value);
-                });
+                assertThrows(InvalidValueException.class, () -> row.changeCell().atPosition(position + 1).toValue(value));
             }
         }
     }
@@ -148,7 +138,7 @@ class RowTest {
         void shouldBeAbleToStreamTheValuesInARow() {
             List<Integer> rowValues = row.stream()
                                          .map(Cell::getValue)
-                                         .collect(Collectors.toUnmodifiableList());
+                                         .collect(toUnmodifiableList());
             assertEquals(expectedValues, rowValues);
         }
 
@@ -165,9 +155,7 @@ class RowTest {
         @DisplayName("Should be able to call forEach on a row")
         void shouldBeAbleToCallForEachOnARow() {
             AtomicInteger index = new AtomicInteger(0);
-            row.forEach(cell -> {
-                assertEquals(expectedValues.get(index.getAndIncrement()), cell.getValue());
-            });
+            row.forEach(cell -> assertEquals(expectedValues.get(index.getAndIncrement()), cell.getValue()));
             assertEquals(9, index.get());
         }
     }
