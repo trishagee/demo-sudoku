@@ -95,5 +95,10 @@ class Row implements Iterable<Cell> {
                 throw new InvalidValueException("This is a duplicate");
             }
         }
+
+        public void toEmpty() {
+            cellValues.remove(cell.getValue());
+            cell.setEmpty();
+        }
     }
 }

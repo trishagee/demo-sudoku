@@ -26,6 +26,10 @@ class Cell {
         this.value = value;
     }
 
+    public void setEmpty() {
+        this.value = EMPTY_VALUE;
+    }
+
     private void validateValue(int value) {
         if (value < 1 || value > 9) {
             throw new InvalidValueException();

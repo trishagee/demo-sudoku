@@ -96,6 +96,24 @@ class RowTest {
                 row.changeCell().atPosition(differentPosition).toValue(newValue);
                 assertEquals(newValue, row.cellAt(differentPosition).getValue());
             }
+
+            @Test
+            @DisplayName("removing a value")
+            void shouldAllowRemovingAValue() {
+                row.changeCell().atPosition(position).toEmpty();
+                assertTrue(row.cellAt(position).isEmpty());
+            }
+
+            @Test
+            @DisplayName("removing a value from one cell and adding to another")
+            void shouldAllowRemovingAValueAndReadding() {
+                int differentPosition = position + 1;
+
+                row.changeCell().atPosition(position).toEmpty();
+                row.changeCell().atPosition(differentPosition).toValue(value);
+
+                assertEquals(value, row.cellAt(differentPosition).getValue());
+            }
         }
 
         @Nested
