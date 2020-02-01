@@ -72,4 +72,14 @@ class CellTest {
         Cell cell = new Cell(3);
         assertEquals(3, cell.getValue());
     }
+
+    @Test
+    @DisplayName("Should be able to clear the cell")
+    void shouldBeAbleToClearTheCell() {
+        Cell cell = new Cell(3);
+        cell.setEmpty();
+
+        assertTrue(cell.isEmpty());
+    }
+
 }

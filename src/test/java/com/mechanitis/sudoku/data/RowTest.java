@@ -98,13 +98,6 @@ class RowTest {
             }
 
             @Test
-            @DisplayName("removing a value")
-            void shouldAllowRemovingAValue() {
-                row.changeCell().atPosition(position).toEmpty();
-                assertTrue(row.cellAt(position).isEmpty());
-            }
-
-            @Test
             @DisplayName("removing a value from one cell and adding to another")
             void shouldAllowRemovingAValueAndReadding() {
                 int differentPosition = position + 1;
