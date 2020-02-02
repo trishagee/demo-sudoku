@@ -13,19 +13,19 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static java.util.stream.Collectors.toUnmodifiableList;
 import static org.junit.jupiter.api.Assertions.*;
 
-class BlockTest {
+class BlockImplTest {
 
     @Test
     @DisplayName("Should have exactly 9 cells")
     void shouldHaveExactly9Cells() {
-        assertEquals(9, new Block().getLength());
+        assertEquals(9, new BlockImpl().getLength());
     }
 
     @DisplayName("Should be able to get a cell at any position from 0 to 8 inclusive")
     @ParameterizedTest(name = "{0}")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8})
     void shouldBeAbleToGetACellAtAnyValidPosition(int position) {
-        Cell cell = new Block().cellAt(position);
+        Cell cell = new BlockImpl().cellAt(position);
         // this should be changed so we know we have the correct cell!
         assertTrue(cell.isEmpty());
     }
@@ -34,7 +34,7 @@ class BlockTest {
     @ParameterizedTest(name = "{0}")
     @ValueSource(ints = {-1, 9, 7847843})
     void shouldNotBeAbleToGetACellAtInvalidPosition(int position) {
-        Block block = new Block();
+        Block block = new BlockImpl();
         assertThrows(InvalidPositionException.class, () -> block.cellAt(position));
     }
 
@@ -44,7 +44,7 @@ class BlockTest {
         // odd test / name - actually I mean sure, in theory you can change a cell value, but it won't change the
         // actual value in the block
         int expectedValue = 5;
-        Block block = new Block();
+        Block block = new BlockImpl();
         block.cellAt(3).setValue(expectedValue);
 
         assertNotEquals(expectedValue, block.cellAt(3).getValue());
@@ -54,7 +54,7 @@ class BlockTest {
     @DisplayName("Should be able to set a value at a given position")
     void shouldBeAbleToSetAValueAtAGivenPosition() {
         int expectedValue = 5;
-        Block block = new Block();
+        var block = new BlockImpl();
         block.changeCell().atPosition(3).toValue(expectedValue);
 
         assertEquals(expectedValue, block.cellAt(3).getValue());
@@ -66,7 +66,7 @@ class BlockTest {
         private final int position = 3;
         private final int value = 5;
         // Subject
-        private final Block block = new Block();
+        private final BlockImpl block = new BlockImpl();
 
         @BeforeEach
         void createBlockWithOneValue() {
@@ -127,7 +127,7 @@ class BlockTest {
     class WhenBlockIsPopulated {
         private final List<Integer> expectedValues = List.of(2, 5, 3, 4, 9, 8, 1, 7, 6);
         // Subject
-        private final Block block = new Block(2, 5, 3, 4, 9, 8, 1, 7, 6);
+        private final Block block = new BlockImpl(2, 5, 3, 4, 9, 8, 1, 7, 6);
 
         @Test
         @DisplayName("Should be able to see all the values in a given block")

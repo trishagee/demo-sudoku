@@ -9,18 +9,18 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-public class Block implements Iterable<Cell> {
+public class BlockImpl implements Block {
     private final Cell[] cells = new Cell[9];
     // needs to be kept in sync with the array of values
     private final Set<Integer> cellValues = new HashSet<>();
 
-    Block() {
+    BlockImpl() {
         for (int i = 0; i < cells.length; i++) {
             cells[i] = new Cell();
         }
     }
 
-    Block(int i0, int i1, int i2, int i3, int i4, int i5, int i6, int i7, int i8) {
+    BlockImpl(int i0, int i1, int i2, int i3, int i4, int i5, int i6, int i7, int i8) {
         cells[0] = new Cell(i0);
         cells[1] = new Cell(i1);
         cells[2] = new Cell(i2);
@@ -32,20 +32,23 @@ public class Block implements Iterable<Cell> {
         cells[8] = new Cell(i8);
     }
 
-    int getLength() {
+    @Override
+    public int getLength() {
         return cells.length;
     }
 
-    Cell cellAt(int position) {
+    @Override
+    public Cell cellAt(int position) {
         validatePosition(position);
         return Cell.copy(cells[position]);
     }
 
-    Block.Mutator changeCell() {
-        return new Block.Mutator();
+    public Mutator changeCell() {
+        return new Mutator();
     }
 
-    Stream<Cell> stream() {
+    @Override
+    public Stream<Cell> stream() {
         return StreamSupport.stream(spliterator(), false);
     }
 
@@ -74,7 +77,7 @@ public class Block implements Iterable<Cell> {
         // TODO: need to work out how to enforce ordering here, i.e. you have to select a cell before you can change it
         private Cell cell;
 
-        Block.Mutator atPosition(int position) {
+        Mutator atPosition(int position) {
             cell = cells[position];
             return this;
         }
