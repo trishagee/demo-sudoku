@@ -1,5 +1,6 @@
 package com.mechanitis.sudoku.data;
 
+// is there any value in this being a record?
 class Cell {
     private static final int EMPTY_VALUE = -1;
     private int value;

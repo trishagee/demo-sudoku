@@ -57,16 +57,23 @@ public class Grid {
         void toValue(int value) {
             rows[rowIndex].changeCell().atPosition(columnIndex).toValue(value);
             columns[columnIndex].changeCell().atPosition(rowIndex).toValue(value);
+            boxes[Position.indexFromCoords(rowIndex, columnIndex)].changeCell().atPosition(0).toValue(value);
         }
     }
 
     enum Position {
-        TopLeft(0);
+        TopLeft(0), TopCentre(0), TopRight(0),
+        CentreLeft(0), CentreCentre(0), CentreRight(0),
+        BottomLeft(0), BottomCentre(0), BottomRight(0);
 
-        private int index;
+        private final int index;
 
         Position(int index) {
             this.index = index;
+        }
+
+        private static int indexFromCoords(int rowIndex, int columnIndex) {
+            return 0;
         }
     }
 }
