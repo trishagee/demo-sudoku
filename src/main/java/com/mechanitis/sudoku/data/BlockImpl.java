@@ -33,7 +33,7 @@ public class BlockImpl implements Block {
     }
 
     @Override
-    public int getLength() {
+    public int getSize() {
         return cells.length;
     }
 

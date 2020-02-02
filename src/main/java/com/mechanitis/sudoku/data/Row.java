@@ -17,8 +17,8 @@ class Row implements Block {
     }
 
     //currently for testing.
-    public int getLength() {
-        return block.getLength();
+    public int getSize() {
+        return block.getSize();
     }
 
     /**

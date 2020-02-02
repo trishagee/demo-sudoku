@@ -18,7 +18,7 @@ class BlockImplTest {
     @Test
     @DisplayName("Should have exactly 9 cells")
     void shouldHaveExactly9Cells() {
-        assertEquals(9, new BlockImpl().getLength());
+        assertEquals(9, new BlockImpl().getSize());
     }
 
     @DisplayName("Should be able to get a cell at any position from 0 to 8 inclusive")
