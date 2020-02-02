@@ -10,13 +10,13 @@ public class Grid {
     // the data is effectively duplicated in both, but it makes it easy to access
     Row[] rows = new Row[SIZE];
     Column[] columns = new Column[SIZE];
-    BlockImpl[] boxes = new BlockImpl[SIZE];
+    Box[] boxes = new Box[SIZE];
 
     public Grid() {
         for (int i = 0; i < SIZE; i++) {
             rows[i] = new Row();
             columns[i] = new Column();
-            boxes[i] = new BlockImpl();
+            boxes[i] = new Box();
         }
     }
 
