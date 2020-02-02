@@ -70,15 +70,6 @@ class GridTest {
     }
 
     @Test
-    @DisplayName("Should have the same value whether accessed via Column or Row")
-    @Disabled("Not implemented yet")
-    void shouldHaveTheSameValueWhetherAccessedViaColumnOrRow() {
-        // need a way to set values in the grid.
-        // maybe inject a generator or something?
-        fail("Not implemented");
-    }
-
-    @Test
     @DisplayName("Should be able to draw the grid")
     @Disabled("Not implemented yet")
     void shouldBeAbleToDrawTheGrid() {
@@ -89,8 +80,14 @@ class GridTest {
     @DisplayName("Should be able to get a column")
     void shouldBeAbleToGetAColumn() {
         Column column = grid.columnAt(3);
-
         assertNotNull(column);
+    }
+
+    @Test
+    @DisplayName("Should be able to get a row")
+    void shouldBeAbleToGetARow() {
+        Row row = grid.rowAt(4);
+        assertNotNull(row);
     }
 
     @Test
@@ -101,18 +98,18 @@ class GridTest {
     }
 
     @Test
-    @DisplayName("Should be able to get a row")
-    void shouldBeAbleToGetARow() {
+    @DisplayName("Should have the same value whether accessed via Column or Row")
+    void shouldHaveTheSameValueWhetherAccessedViaColumnOrRow() {
         int value = 7;
         int rowIndex = 4;
-        grid.changeCell().onRow(rowIndex).atPosition(2).toValue(value);
+        int columnIndex = 2;
+        grid.changeCell().onRow(rowIndex).atPosition(columnIndex).toValue(value);
 
-        Row row = grid.rowAt(rowIndex);
-
-        assertNotNull(row);
-        assertEquals(value, row.cellAt(2).getValue());
+        assertEquals(value, grid.rowAt(rowIndex).cellAt(columnIndex).getValue());
+        assertEquals(value, grid.columnAt(columnIndex).cellAt(rowIndex).getValue());
     }
 
     //ideas
     // is this a good place to try out different testing types, mutation testing for example
+    // do we need a way to define / use / inject a generator?
 }

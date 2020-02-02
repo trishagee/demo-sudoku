@@ -5,6 +5,7 @@ package com.mechanitis.sudoku.data;
  */
 public class Grid {
     private static final int SIZE = 9;
+    // the data is effectively duplicated in both, but it makes it easy to access
     Row[] rows = new Row[SIZE];
     Column[] columns = new Column[SIZE];
 
@@ -47,6 +48,7 @@ public class Grid {
 
         void toValue(int value) {
             rows[rowIndex].changeCell().atPosition(columnIndex).toValue(value);
+            columns[columnIndex].changeCell().atPosition(rowIndex).toValue(value);
         }
     }
 }
