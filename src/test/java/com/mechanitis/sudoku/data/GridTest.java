@@ -2,12 +2,14 @@ package com.mechanitis.sudoku.data;
 
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class GridTest {
     private final Grid grid = new Grid();
@@ -57,8 +59,65 @@ class GridTest {
             assertEquals(value, grid.cellAt(rowIndex, columnIndex).getValue());
         }
 
+        @Test
+        @DisplayName("Should be able to change a value")
+        void shouldBeAbleToChangeAValue() {
+            int newValue = 9;
+            grid.changeCell().onRow(rowIndex).atPosition(columnIndex).toValue(newValue);
+            assertEquals(newValue, grid.cellAt(rowIndex, columnIndex).getValue());
+        }
+
     }
 
+    @Test
+    @DisplayName("Should have the same value whether accessed via Column or Row")
+    @Disabled("Not implemented yet")
+    void shouldHaveTheSameValueWhetherAccessedViaColumnOrRow() {
+        // need a way to set values in the grid.
+        // maybe inject a generator or something?
+        fail("Not implemented");
+    }
+
+    @Test
+    @DisplayName("Should be able to draw the grid")
+    @Disabled("Not implemented yet")
+    void shouldBeAbleToDrawTheGrid() {
+        fail("Not implemented");
+    }
+
+    @Test
+    @DisplayName("Should be able to get a column")
+    @Disabled("Not implemented yet")
+    void shouldBeAbleToGetAColumn() {
+        int value = 2;
+        int columnIndex = 5;
+        grid.changeCell().onRow(columnIndex).atPosition(8).toValue(value);
+
+        Column column = grid.columnAt(columnIndex);
+
+        assertNotNull(column);
+        assertEquals(value, column.cellAt(8).getValue());
+    }
+
+    @Test
+    @DisplayName("Should be able to get a box")
+    @Disabled("Not implemented yet")
+    void shouldBeAbleToGetABox() {
+        fail("Not implemented");
+    }
+
+    @Test
+    @DisplayName("Should be able to get a row")
+    void shouldBeAbleToGetARow() {
+        int value = 7;
+        int rowIndex = 4;
+        grid.changeCell().onRow(rowIndex).atPosition(2).toValue(value);
+
+        Row row = grid.rowAt(rowIndex);
+
+        assertNotNull(row);
+        assertEquals(value, row.cellAt(2).getValue());
+    }
 
     //ideas
     // is this a good place to try out different testing types, mutation testing for example

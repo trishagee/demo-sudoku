@@ -17,6 +17,14 @@ public class Grid {
         return rows[rowIndex].cellAt(columnIndex);
     }
 
+    public Row rowAt(int rowIndex) {
+        return rows[rowIndex];
+    }
+
+    public Column columnAt(int columnIndex) {
+        return null;
+    }
+
     public Mutator changeCell() {
         return new Mutator();
     }
