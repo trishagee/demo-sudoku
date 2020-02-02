@@ -5,59 +5,50 @@ import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public class Column implements Iterable<Cell> {
-    private Cell[] cells = new Cell[9];
+public class Column implements Block {
+    private final BlockImpl block;
 
-    public Column() {
-
+    Column() {
+        block = new BlockImpl();
     }
 
-    public Column(int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7, int i8) {
-
+    Column(int i0, int i1, int i2, int i3, int i4, int i5, int i6, int i7, int i8) {
+        block = new BlockImpl(i0, i1, i2, i3, i4, i5, i6, i7, i8);
     }
 
+    //currently for testing.
     public int getLength() {
-        return 0;
+        return block.getLength();
     }
 
+    /**
+     * @param position the zero-indexed position of the desired Cell
+     * @return a copy of the Cell at this position
+     */
     public Cell cellAt(int position) {
-        return null;
+        return block.cellAt(position);
     }
 
-    public Mutator changeCell() {
-        return new Mutator();
+    public BlockImpl.Mutator changeCell() {
+        return block.changeCell();
     }
 
     public Stream<Cell> stream() {
-        return null;
+        return block.stream();
     }
 
     @Override
     public Iterator<Cell> iterator() {
-        return null;
+        return block.iterator();
     }
 
     @Override
     public void forEach(Consumer<? super Cell> action) {
-
+        block.forEach(action);
     }
 
     @Override
     public Spliterator<Cell> spliterator() {
-        return null;
-    }
-
-    static class Mutator {
-        public Mutator atPosition(int position) {
-            return null;
-        }
-
-        public void toValue(int value) {
-
-        }
-
-        public void toEmpty() {
-
-        }
+        return block.spliterator();
     }
 }
