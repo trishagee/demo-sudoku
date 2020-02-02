@@ -5,6 +5,16 @@ import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
+/**
+ * A Box is a section of the grid that is a 3x3 matrix. So unlike Row and Column has two dimensions, isn't just a
+ * simple list. For this reason, we need to map from two-dimensional co-ordinates to the one dimension for Block.
+ *
+ *  1  2  3
+ *  4  5  6
+ *  7  8  9
+ *
+ * Value 1 is at position 0,0 value 2 is at 0,1 and value 9 is at 2,2. These are stored sequentially in a Block
+ */
 public class Box implements Block {
     private final BlockImpl block;
 
@@ -50,5 +60,10 @@ public class Box implements Block {
     @Override
     public Spliterator<Cell> spliterator() {
         return block.spliterator();
+    }
+
+    Cell cellAt(int rowIndex, int columnIndex) {
+        int index = 3 * rowIndex + columnIndex;
+        return block.cellAt(index);
     }
 }
