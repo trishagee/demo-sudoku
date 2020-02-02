@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import static com.mechanitis.sudoku.data.Grid.Position.TopLeft;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -93,9 +94,9 @@ class GridTest {
 
     @Test
     @DisplayName("Should be able to get a box")
-    @Disabled("Not implemented yet")
     void shouldBeAbleToGetABox() {
-        fail("Not implemented");
+        Block box = grid.boxAt(TopLeft);
+        assertNotNull(box);
     }
 
     @Test
