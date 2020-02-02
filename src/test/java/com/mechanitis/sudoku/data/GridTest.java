@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
 class GridTest {
@@ -107,6 +108,31 @@ class GridTest {
 
         assertEquals(value, grid.rowAt(rowIndex).cellAt(columnIndex).getValue());
         assertEquals(value, grid.columnAt(columnIndex).cellAt(rowIndex).getValue());
+    }
+
+    @Test
+    @DisplayName("Should error if trying to insert a value that is already duplicated in the row")
+    void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheRow() {
+        grid.changeCell().onRow(2).atPosition(3).toValue(7);
+
+        assertThrows(InvalidValueException.class, () -> grid.changeCell().onRow(2).atPosition(8).toValue(7));
+    }
+
+    @Test
+    @DisplayName("Should error if trying to insert a value that is already duplicated in the column")
+    void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheColumn() {
+        grid.changeCell().onRow(2).atPosition(3).toValue(7);
+
+        assertThrows(InvalidValueException.class, () -> grid.changeCell().onRow(8).atPosition(3).toValue(7));
+    }
+
+    @Test
+    @DisplayName("Should error if trying to insert a value that is already duplicated in the box")
+    @Disabled("Not implemented yet")
+    void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheBox() {
+        grid.changeCell().onRow(0).atPosition(0).toValue(7);
+
+        assertThrows(InvalidValueException.class, () -> grid.changeCell().onRow(1).atPosition(1).toValue(7));
     }
 
     //ideas
