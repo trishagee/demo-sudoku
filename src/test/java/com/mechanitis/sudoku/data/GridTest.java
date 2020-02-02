@@ -87,16 +87,10 @@ class GridTest {
 
     @Test
     @DisplayName("Should be able to get a column")
-    @Disabled("Not implemented yet")
     void shouldBeAbleToGetAColumn() {
-        int value = 2;
-        int columnIndex = 5;
-        grid.changeCell().onRow(columnIndex).atPosition(8).toValue(value);
-
-        Column column = grid.columnAt(columnIndex);
+        Column column = grid.columnAt(3);
 
         assertNotNull(column);
-        assertEquals(value, column.cellAt(8).getValue());
     }
 
     @Test

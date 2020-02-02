@@ -4,12 +4,14 @@ package com.mechanitis.sudoku.data;
  * 0,0 0,1 0,2
  */
 public class Grid {
-    Row[] rows = new Row[9];
-    Column[] columns = new Column[9];
+    private static final int SIZE = 9;
+    Row[] rows = new Row[SIZE];
+    Column[] columns = new Column[SIZE];
 
     public Grid() {
-        for (int i = 0; i < rows.length; i++) {
+        for (int i = 0; i < SIZE; i++) {
             rows[i] = new Row();
+            columns[i] = new Column();
         }
     }
 
@@ -22,7 +24,7 @@ public class Grid {
     }
 
     public Column columnAt(int columnIndex) {
-        return null;
+        return columns[columnIndex];
     }
 
     public Mutator changeCell() {
