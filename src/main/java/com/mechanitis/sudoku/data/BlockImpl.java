@@ -9,10 +9,12 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import static java.util.Arrays.asList;
+
 public class BlockImpl implements Block {
     private final Cell[] cells = new Cell[9];
     // needs to be kept in sync with the array of values
-    private final Set<Integer> cellValues = new HashSet<>();
+    private final Set<Integer> cellValues = new HashSet<>(9);
 
     BlockImpl() {
         for (int i = 0; i < cells.length; i++) {
@@ -21,6 +23,12 @@ public class BlockImpl implements Block {
     }
 
     BlockImpl(int i0, int i1, int i2, int i3, int i4, int i5, int i6, int i7, int i8) {
+        cellValues.addAll(asList(i0, i1, i2, i3, i4, i5, i6, i7, i8));
+        if (cellValues.size() < 9) {
+            // if, after adding all 9 arguments into the set there are not actually nine elements in the set, there's
+            // at least one duplicate
+            throw new InvalidValueException("Duplicate values are not allowed");
+        }
         cells[0] = new Cell(i0);
         cells[1] = new Cell(i1);
         cells[2] = new Cell(i2);
