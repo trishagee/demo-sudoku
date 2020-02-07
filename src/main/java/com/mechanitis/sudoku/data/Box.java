@@ -13,7 +13,7 @@ import java.util.stream.Stream;
  *  4  5  6
  *  7  8  9
  *
- * Value 1 is at position 0,0 value 2 is at 0,1 and value 9 is at 2,2. These are stored sequentially in a Block
+ * Value 1 is at position 0,0 value 2 is at 0,1 and value 9 is at 2,2. These are stored sequentially in a Block.
  */
 public class Box implements Block {
     private final BlockImpl block;
@@ -39,8 +39,8 @@ public class Box implements Block {
         return block.cellAt(position);
     }
 
-    public BlockImpl.Mutator changeCell() {
-        return block.changeCell();
+    public Mutator changeCell() {
+        return new Mutator(block.changeCell());
     }
 
     public Stream<Cell> stream() {
@@ -63,7 +63,34 @@ public class Box implements Block {
     }
 
     Cell cellAt(int rowIndex, int columnIndex) {
-        int index = 3 * rowIndex + columnIndex;
+        int index = get1DIndexFromCoords(rowIndex, columnIndex);
         return block.cellAt(index);
     }
+
+    private int get1DIndexFromCoords(int rowIndex, int columnIndex) {
+        return 3 * rowIndex + columnIndex;
+    }
+
+    class Mutator {
+        // TODO: need to work out how to enforce ordering here, i.e. you have to select a cell before you can change it
+        private BlockImpl.Mutator mutator;
+
+        private Mutator(BlockImpl.Mutator mutator) {
+            this.mutator = mutator;
+        }
+
+        Mutator atPosition(int rowIndex, int columnIndex) {
+            this.mutator = mutator.atPosition(get1DIndexFromCoords(rowIndex, columnIndex));
+            return this;
+        }
+
+        void toValue(int value) {
+            mutator.toValue(value);
+        }
+
+        void toEmpty() {
+            mutator.toEmpty();
+        }
+    }
+
 }
