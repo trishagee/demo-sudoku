@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static com.mechanitis.sudoku.data.Grid.Position.*;
+import static com.mechanitis.sudoku.data.Position.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -106,15 +106,16 @@ class GridTest {
     }
 
     @Test
-    @DisplayName("Should have the same value whether accessed via Column or Row")
-    void shouldHaveTheSameValueWhetherAccessedViaColumnOrRow() {
+    @DisplayName("Should have the same value whether accessed via Column or Row or Box")
+    void shouldHaveTheSameValueWhetherAccessedViaColumnOrRowOrBox() {
         int value = 7;
         int rowIndex = 4;
-        int columnIndex = 2;
+        int columnIndex = 1;
         grid.changeCell().onRow(rowIndex).atPosition(columnIndex).toValue(value);
 
         assertEquals(value, grid.rowAt(rowIndex).cellAt(columnIndex).getValue());
         assertEquals(value, grid.columnAt(columnIndex).cellAt(rowIndex).getValue());
+        assertEquals(value, grid.boxAt(CentreLeft).cellAt(2, 1).getValue());
     }
 
     @Test
@@ -142,17 +143,24 @@ class GridTest {
         assertThrows(InvalidValueException.class, () -> grid.changeCell().onRow(1).atPosition(1).toValue(7));
     }
 
-
     @DisplayName("Should get the correct box for a position")
     //probably this test understands implementation details
     @ParameterizedTest(name = "{0}")
     @MethodSource("positionAndValueProvider")
-    @Disabled("Basics are getting there but this is complicated")
-    void shouldBeAbleToGetABox(Grid.Position position, int expectedValue) {
+    void shouldBeAbleToGetABox(Position position, int expectedValue) {
         insertValuesIntoFirstCellOfEachBox();
 
-        Block box = grid.boxAt(position);
-        assertEquals(expectedValue, box.cellAt(0).getValue());
+        Box box = grid.boxAt(position);
+        assertEquals(expectedValue, box.cellAt(0, 0).getValue());
+    }
+
+    @Test
+    @DisplayName("Should be able to set a value and read it from the box")
+    void shouldBeAbleToSetAValueAndReadItFromTheBox() {
+        int expectedValue = 1;
+        grid.changeCell().onRow(0).atPosition(0).toValue(expectedValue);
+
+        assertEquals(expectedValue, grid.boxAt(TopLeft).cellAt(0, 0).getValue());
     }
 
     private void insertValuesIntoFirstCellOfEachBox() {

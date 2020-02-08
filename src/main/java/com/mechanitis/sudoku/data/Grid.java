@@ -1,7 +1,5 @@
 package com.mechanitis.sudoku.data;
 
-import javax.swing.*;
-
 /**
  * 0,0 0,1 0,2
  */
@@ -10,7 +8,7 @@ public class Grid {
     // the data is effectively duplicated in both, but it makes it easy to access
     Row[] rows = new Row[SIZE];
     Column[] columns = new Column[SIZE];
-    Box[] boxes = new Box[SIZE];
+    private final Box[] boxes = new Box[SIZE];
 
     public Grid() {
         for (int i = 0; i < SIZE; i++) {
@@ -32,8 +30,8 @@ public class Grid {
         return columns[columnIndex];
     }
 
-    public Block boxAt(Position position) {
-        return boxes[position.index];
+    public Box boxAt(Position position) {
+        return boxes[position.getIndex()];
     }
 
     public Mutator changeCell() {
@@ -57,23 +55,9 @@ public class Grid {
         void toValue(int value) {
             rows[rowIndex].changeCell().atPosition(columnIndex).toValue(value);
             columns[columnIndex].changeCell().atPosition(rowIndex).toValue(value);
-            boxes[Position.indexFromCoords(rowIndex, columnIndex)].changeCell().atPosition(0).toValue(value);
+            // the second row and position are those INSIDE the box.fml.
+            boxes[Position.indexFromCoords(rowIndex, columnIndex)].changeCell().atPosition(rowIndex,columnIndex).toValue(value);
         }
     }
 
-    enum Position {
-        TopLeft(0), TopCentre(0), TopRight(0),
-        CentreLeft(0), CentreCentre(0), CentreRight(0),
-        BottomLeft(0), BottomCentre(0), BottomRight(0);
-
-        private final int index;
-
-        Position(int index) {
-            this.index = index;
-        }
-
-        private static int indexFromCoords(int rowIndex, int columnIndex) {
-            return 0;
-        }
-    }
 }
