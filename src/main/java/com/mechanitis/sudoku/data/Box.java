@@ -63,9 +63,6 @@ public class Box implements Block {
     }
 
     private Cell cellAt(int rowIndex, int columnIndex) {
-        if (rowIndex < 0 || columnIndex < 0 || rowIndex > 2 || columnIndex > 2) {
-            throw new InvalidValueException("Box coordinates are 0 to 2 inclusive");
-        }
         int index = get1DIndexFromCoords(rowIndex, columnIndex);
         return block.cellAt(index);
     }

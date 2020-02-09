@@ -23,14 +23,6 @@ class BoxTest {
         assertEquals(value, box.cellAt(boxCoords).getValue());
     }
 
-    @ParameterizedTest(name = "{0}, {1} = {2}")
-    @DisplayName("Should throw an exception for invalid coordinates")
-    @CsvSource({"0,3", "3,0", "3,3", "-1,0", "0,-1"})
-    void shouldThrowAnExceptionForInvalidCoordinates(int rowIndex, int columnIndex) {
-        BoxCoords boxCoords = new BoxCoords(rowIndex, columnIndex);
-        assertThrows(InvalidValueException.class, () -> box.cellAt(boxCoords));
-    }
-
     @Test
     @DisplayName("Should set empty from coordinate")
     void shouldSetEmptyFromCoordinate() {
