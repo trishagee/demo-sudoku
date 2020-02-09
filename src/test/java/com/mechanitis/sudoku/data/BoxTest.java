@@ -28,7 +28,7 @@ class BoxTest {
     void shouldSetEmptyFromCoordinate() {
         BoxCoords boxCoords = new BoxCoords(1, 2);
         assumeTrue(box.cellAt(boxCoords).getValue() == 3);
-        box.changeCell().atPosition(1, 2).toEmpty();
+        box.changeCell().atPosition(boxCoords).toEmpty();
 
         assertTrue(box.cellAt(boxCoords).isEmpty());
     }
@@ -36,15 +36,16 @@ class BoxTest {
     @Test
     @DisplayName("Should set the value from coordinate")
     void shouldSetTheValueFromCoordinate() {
-        BoxCoords boxCoords = new BoxCoords(2, 2);
+        BoxCoords coordsForPositionWithValueWeWant = new BoxCoords(2, 2);
         //if we want to use a value, we first have to remove it from its original position
-        assumeTrue(box.cellAt(boxCoords).getValue() == 9);
-        box.changeCell().atPosition(2, 2).toEmpty();
-        assumeTrue(box.cellAt(boxCoords).getValue() == 8);
+        assumeTrue(box.cellAt(coordsForPositionWithValueWeWant).getValue() == 9);
+        box.changeCell().atPosition(coordsForPositionWithValueWeWant).toEmpty();
+        assumeTrue(box.cellAt(coordsForPositionWithValueWeWant).getValue() == 8);
 
-        box.changeCell().atPosition(2, 1).toValue(9);
+        BoxCoords coordsForPositionWeWantToUpdate = new BoxCoords(2, 1);
+        box.changeCell().atPosition(coordsForPositionWeWantToUpdate).toValue(9);
 
-        assertEquals(9, box.cellAt(new BoxCoords(2, 1)).getValue());
+        assertEquals(9, box.cellAt(coordsForPositionWeWantToUpdate).getValue());
     }
 
     @Test
@@ -53,6 +54,7 @@ class BoxTest {
         BoxCoords boxCoords = new BoxCoords(0, 0);
         assumeTrue(box.cellAt(boxCoords).getValue() == 6);
 
-        assertThrows(InvalidValueException.class, () -> box.changeCell().atPosition(2, 1).toValue(3));
+        assertThrows(InvalidValueException.class,
+                () -> box.changeCell().atPosition(new BoxCoords(2, 1)).toValue(3));
     }
 }

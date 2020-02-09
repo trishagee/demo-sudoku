@@ -67,7 +67,7 @@ public class Box implements Block {
     }
 
     Cell cellAt(GridCoords gridCoords) {
-        return cellAt(gridCoords.convertToBoxCoords());
+        return cellAt(gridCoords.toBoxCoords());
     }
 
     Cell cellAt(BoxCoords boxCoords) {
@@ -82,20 +82,21 @@ public class Box implements Block {
             this.mutator = mutator;
         }
 
-        Mutator atPosition(int rowIndex, int columnIndex) {
-            // this row and column index is just for this box, not the whole grid
-            // The box shouldn't know about its position in the grid.
-            // But this is kinda sucky as all callers need to convert grid coords to box coords
-            this.mutator = mutator.atPosition(get1DIndexFromCoords(rowIndex, columnIndex));
-            return this;
-        }
-
         void toValue(int value) {
             mutator.toValue(value);
         }
 
         void toEmpty() {
             mutator.toEmpty();
+        }
+
+        Mutator atPosition(GridCoords gridCoords) {
+            return atPosition(gridCoords.toBoxCoords());
+        }
+
+        Mutator atPosition(BoxCoords boxCoords) {
+            this.mutator = mutator.atPosition(get1DIndexFromCoords(boxCoords.rowIndex(), boxCoords.columnIndex()));
+            return this;
         }
     }
 

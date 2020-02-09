@@ -56,8 +56,8 @@ public class Grid {
             rows[rowIndex].changeCell().atPosition(columnIndex).toValue(value);
             columns[columnIndex].changeCell().atPosition(rowIndex).toValue(value);
             // this is not super pretty, there must be a neater way
-            Coords coords = Position.boxCoordsFromGridCoords(rowIndex, columnIndex);
-            boxes[Position.indexFromCoords(rowIndex, columnIndex)].changeCell().atPosition(coords.rowIndex(),coords.columnIndex()).toValue(value);
+            GridCoords gridCoords = new GridCoords(rowIndex, columnIndex);
+            boxes[Position.indexFromCoords(rowIndex, columnIndex)].changeCell().atPosition(gridCoords).toValue(value);
         }
     }
 
