@@ -71,7 +71,11 @@ public class Box implements Block {
     }
 
     private int get1DIndexFromCoords(int rowIndex, int columnIndex) {
-        return 3 * rowIndex + columnIndex;
+        return (3 * rowIndex) + columnIndex;
+    }
+
+    public Cell cellAt(Coords gridCoords) {
+        return cellAt(gridCoords.rowIndex() % 3, gridCoords.columnIndex() % 3);
     }
 
     class Mutator {

@@ -1,4 +1,7 @@
 package com.mechanitis.sudoku.data;
 
-record Coords(int rowIndex, int columnIndex) {
+interface Coords {
+    int rowIndex();
+
+    int columnIndex();
 }

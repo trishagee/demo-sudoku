@@ -45,7 +45,7 @@ enum Position {
 
     public static Coords boxCoordsFromGridCoords(int rowIndex, int columnIndex) {
 
-        return new Coords(rowIndex % 3,columnIndex % 3);
+        return new BoxCoords(rowIndex % 3,columnIndex % 3);
     }
 
     public int getIndex() {

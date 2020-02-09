@@ -159,9 +159,11 @@ class GridTest {
     @DisplayName("Should be able to set a value and read it from the box")
     void shouldBeAbleToSetAValueAndReadItFromTheBox() {
         int expectedValue = 1;
-        grid.changeCell().onRow(0).atPosition(0).toValue(expectedValue);
+        grid.changeCell().onRow(7).atPosition(8).toValue(expectedValue);
 
-        assertEquals(expectedValue, grid.boxAt(TopLeft).cellAt(0, 0).getValue());
+        assertEquals(expectedValue, grid.boxAt(BottomRight).cellAt(1, 2).getValue());
+        Coords gridCoords = new GridCoords(7, 8);
+        assertEquals(expectedValue, grid.boxAt(BottomRight).cellAt(gridCoords).getValue());
     }
 
     private void insertValuesIntoFirstCellOfEachBox() {
@@ -193,4 +195,10 @@ class GridTest {
     //ideas
     // is this a good place to try out different testing types, mutation testing for example
     // do we need a way to define / use / inject a generator?
+
+    // TODO
+    // - Use Coords record more
+    // - Provide a better way of converting between grid and box coords
+    // - reduce duplication in PositionTest to have just one set of data
+    // - see if there's a way to simplify all the helpers in Position so that there aren't so many
 }
