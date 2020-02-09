@@ -42,17 +42,6 @@ class PositionTest {
         assertEquals(index, Position.indexFromCoords(rowIndex, columnIndex));
     }
 
-    @ParameterizedTest
-    @DisplayName("Should convert grid coordinates into box coordinates")
-    @MethodSource("gridCoordinatesToBoxCoordinates")
-    void shouldConvertGridCoordinatesIntoBoxCoordinates(int rowIndex, int columnIndex,
-                                                        int boxRowIndex,
-                                                        int boxColumnIndex) {
-        Coords coords = boxCoordsFromGridCoords(rowIndex, columnIndex);
-        assertEquals(boxRowIndex, coords.rowIndex());
-        assertEquals(boxColumnIndex, coords.columnIndex());
-    }
-
     static Stream<Arguments> coordinatesAndPositions() {
         return Stream.of(
                 arguments(0, 0, TopLeft),
