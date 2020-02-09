@@ -15,13 +15,6 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class PositionTest {
     @ParameterizedTest
-    @DisplayName("Should return the correct position for coordinates")
-    @MethodSource("coordinatesAndPositions")
-    void shouldReturnTheCorrectPositionForCoordinates(int rowIndex, int columnIndex, Position position) {
-        assertEquals(position, Position.positionFromCoords(rowIndex, columnIndex));
-    }
-
-    @ParameterizedTest
     @DisplayName("Should return the correct position for an index")
     @MethodSource("indexAndPositions")
     void shouldReturnTheCorrectPositionForAnIndex(int index, Position position) {
@@ -40,20 +33,6 @@ class PositionTest {
     @MethodSource("coordinatesAndIndex")
     void shouldReturnTheCorrectIndexForCoordinates(int rowIndex, int columnIndex, int index) {
         assertEquals(index, Position.indexFromCoords(rowIndex, columnIndex));
-    }
-
-    static Stream<Arguments> coordinatesAndPositions() {
-        return Stream.of(
-                arguments(0, 0, TopLeft),
-                arguments(0, 3, TopCentre),
-                arguments(0, 6, TopRight),
-                arguments(3, 0, CentreLeft),
-                arguments(3, 3, CentreCentre),
-                arguments(3, 6, CentreRight),
-                arguments(6, 0, BottomLeft),
-                arguments(6, 3, BottomCentre),
-                arguments(6, 6, BottomRight)
-        );
     }
 
     static Stream<Arguments> indexAndPositions() {

@@ -24,10 +24,6 @@ enum Position {
         }
     }
 
-    public static Position positionFromCoords(int rowIndex, int columnIndex) {
-        return positionFromIndex(indexFromCoords(rowIndex, columnIndex));
-    }
-
     public static Position positionFromIndex(int index) {
         return switch (index) {
             case 0 -> TopLeft;
