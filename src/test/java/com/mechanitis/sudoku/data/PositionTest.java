@@ -4,52 +4,22 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
-import static com.mechanitis.sudoku.data.Position.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class PositionTest {
     @ParameterizedTest
-    @DisplayName("Should return the correct position for an index")
-    @MethodSource("indexAndPositions")
-    void shouldReturnTheCorrectPositionForAnIndex(int index, Position position) {
-        assertEquals(position, Position.positionFromIndex(index));
+    @DisplayName("Should return the correct index for grid coordinates")
+    @MethodSource("gridCoordinatesAndIndex")
+    void shouldReturnTheCorrectIndexForGridCoordinates(int rowIndex, int columnIndex, int index) {
+        assertEquals(index, Position.indexFromCoords(new GridCoords(rowIndex, columnIndex)));
     }
 
-    @ParameterizedTest (name = "{0}")
-    @DisplayName("Should throw an Exception for an invalid index")
-    @ValueSource(ints = {-1, 9, 10, Integer.MAX_VALUE})
-    void shouldThrowAnExceptionForAnInvalidIndex(int index) {
-        assertThrows(InvalidValueException.class, () -> Position.positionFromIndex(index));
-    }
-
-    @ParameterizedTest
-    @DisplayName("Should return the correct index for coordinates")
-    @MethodSource("coordinatesAndIndex")
-    void shouldReturnTheCorrectIndexForCoordinates(int rowIndex, int columnIndex, int index) {
-        assertEquals(index, Position.indexFromCoords(rowIndex, columnIndex));
-    }
-
-    static Stream<Arguments> indexAndPositions() {
-        return Stream.of(
-                arguments(0, TopLeft),
-                arguments(1, TopCentre),
-                arguments(2, TopRight),
-                arguments(3, CentreLeft),
-                arguments(4, CentreCentre),
-                arguments(5, CentreRight),
-                arguments(6, BottomLeft),
-                arguments(7, BottomCentre),
-                arguments(8, BottomRight)
-        );
-    }
-
-    static Stream<Arguments> coordinatesAndIndex() {
+    static Stream<Arguments> gridCoordinatesAndIndex() {
         return Stream.of(
                 arguments(0, 0, 0),
                 arguments(0, 3, 1),
