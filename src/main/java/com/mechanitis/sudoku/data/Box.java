@@ -62,21 +62,16 @@ public class Box implements Block {
         return block.spliterator();
     }
 
-    private Cell cellAt(int rowIndex, int columnIndex) {
-        int index = get1DIndexFromCoords(rowIndex, columnIndex);
-        return block.cellAt(index);
-    }
-
     private int get1DIndexFromCoords(int rowIndex, int columnIndex) {
         return (3 * rowIndex) + columnIndex;
     }
 
     Cell cellAt(GridCoords gridCoords) {
-        return cellAt(gridCoords.rowIndex() % 3, gridCoords.columnIndex() % 3);
+        return cellAt(gridCoords.convertToBoxCoords());
     }
 
     Cell cellAt(BoxCoords boxCoords) {
-        return cellAt(boxCoords.rowIndex(), boxCoords.columnIndex());
+        return block.cellAt(get1DIndexFromCoords(boxCoords.rowIndex(), boxCoords.columnIndex()));
     }
 
     class Mutator {

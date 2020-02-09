@@ -6,4 +6,8 @@ record GridCoords(int rowIndex, int columnIndex) implements Coords {
             throw new InvalidValueException("Box coordinates are 0 to 8 inclusive");
         }
     }
+
+    BoxCoords convertToBoxCoords() {
+        return new BoxCoords(rowIndex % 3, columnIndex % 3);
+    }
 }
