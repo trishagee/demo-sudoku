@@ -115,7 +115,8 @@ class GridTest {
 
         assertEquals(value, grid.rowAt(rowIndex).cellAt(columnIndex).getValue());
         assertEquals(value, grid.columnAt(columnIndex).cellAt(rowIndex).getValue());
-        assertEquals(value, grid.boxAt(CentreLeft).cellAt(2, 1).getValue());
+        Coords coords = Position.boxCoordsFromGridCoords(rowIndex, columnIndex);
+        assertEquals(value, grid.boxAt(CentreLeft).cellAt(coords.rowIndex(), coords.columnIndex()).getValue());
     }
 
     @Test

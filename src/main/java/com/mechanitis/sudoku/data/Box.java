@@ -80,6 +80,9 @@ public class Box implements Block {
         }
 
         Mutator atPosition(int rowIndex, int columnIndex) {
+            // this row and column index is just for this box, not the whole grid
+            // The box shouldn't know about its position in the grid.
+            // But this is kinda sucky as all callers need to convert grid coords to box coords
             this.mutator = mutator.atPosition(get1DIndexFromCoords(rowIndex, columnIndex));
             return this;
         }

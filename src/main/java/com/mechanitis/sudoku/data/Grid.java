@@ -55,8 +55,9 @@ public class Grid {
         void toValue(int value) {
             rows[rowIndex].changeCell().atPosition(columnIndex).toValue(value);
             columns[columnIndex].changeCell().atPosition(rowIndex).toValue(value);
-            // the second row and position are those INSIDE the box.fml.
-            boxes[Position.indexFromCoords(rowIndex, columnIndex)].changeCell().atPosition(rowIndex,columnIndex).toValue(value);
+            // this is not super pretty, there must be a neater way
+            Coords coords = Position.boxCoordsFromGridCoords(rowIndex, columnIndex);
+            boxes[Position.indexFromCoords(rowIndex, columnIndex)].changeCell().atPosition(coords.rowIndex(),coords.columnIndex()).toValue(value);
         }
     }
 
