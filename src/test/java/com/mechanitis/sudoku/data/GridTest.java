@@ -115,8 +115,9 @@ class GridTest {
 
         assertEquals(value, grid.rowAt(rowIndex).cellAt(columnIndex).getValue());
         assertEquals(value, grid.columnAt(columnIndex).cellAt(rowIndex).getValue());
-        Coords coords = Position.boxCoordsFromGridCoords(rowIndex, columnIndex);
-        assertEquals(value, grid.boxAt(CentreLeft).cellAt(coords.rowIndex(), coords.columnIndex()).getValue());
+        BoxCoords coords = Position.boxCoordsFromGridCoords(rowIndex, columnIndex);
+        GridCoords gridCoords = new GridCoords(rowIndex, columnIndex);
+        assertEquals(value, grid.boxAt(CentreLeft).cellAt(gridCoords).getValue());
     }
 
     @Test
@@ -152,7 +153,8 @@ class GridTest {
         insertValuesIntoFirstCellOfEachBox();
 
         Box box = grid.boxAt(position);
-        assertEquals(expectedValue, box.cellAt(0, 0).getValue());
+        BoxCoords boxCoords = new BoxCoords(0, 0);
+        assertEquals(expectedValue, box.cellAt(boxCoords).getValue());
     }
 
     @Test
@@ -161,8 +163,11 @@ class GridTest {
         int expectedValue = 1;
         grid.changeCell().onRow(7).atPosition(8).toValue(expectedValue);
 
-        assertEquals(expectedValue, grid.boxAt(BottomRight).cellAt(1, 2).getValue());
-        Coords gridCoords = new GridCoords(7, 8);
+        // not sure at the moment if we need to be able to access by both types of coords. I would think that from
+        // the Grid one would expect to access purely by gridCoords
+        BoxCoords boxCoords = new BoxCoords(1, 2);
+        assertEquals(expectedValue, grid.boxAt(BottomRight).cellAt(boxCoords).getValue());
+        GridCoords gridCoords = new GridCoords(7, 8);
         assertEquals(expectedValue, grid.boxAt(BottomRight).cellAt(gridCoords).getValue());
     }
 

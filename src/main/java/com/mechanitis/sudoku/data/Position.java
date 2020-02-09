@@ -43,7 +43,7 @@ enum Position {
         };
     }
 
-    public static Coords boxCoordsFromGridCoords(int rowIndex, int columnIndex) {
+    public static BoxCoords boxCoordsFromGridCoords(int rowIndex, int columnIndex) {
 
         return new BoxCoords(rowIndex % 3,columnIndex % 3);
     }

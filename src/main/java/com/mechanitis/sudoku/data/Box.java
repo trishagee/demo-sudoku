@@ -62,7 +62,7 @@ public class Box implements Block {
         return block.spliterator();
     }
 
-    Cell cellAt(int rowIndex, int columnIndex) {
+    private Cell cellAt(int rowIndex, int columnIndex) {
         if (rowIndex < 0 || columnIndex < 0 || rowIndex > 2 || columnIndex > 2) {
             throw new InvalidValueException("Box coordinates are 0 to 2 inclusive");
         }
@@ -74,8 +74,12 @@ public class Box implements Block {
         return (3 * rowIndex) + columnIndex;
     }
 
-    public Cell cellAt(Coords gridCoords) {
+    Cell cellAt(GridCoords gridCoords) {
         return cellAt(gridCoords.rowIndex() % 3, gridCoords.columnIndex() % 3);
+    }
+
+    Cell cellAt(BoxCoords boxCoords) {
+        return cellAt(boxCoords.rowIndex(), boxCoords.columnIndex());
     }
 
     class Mutator {
