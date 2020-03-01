@@ -12,8 +12,8 @@ enum Position {
     }
 
     static int indexFromCoords(GridCoords gridCoords) {
-        int columnOffset = gridCoords.columnIndex() / 3;
-        return switch (gridCoords.rowIndex()) {
+        int columnOffset = gridCoords.column() / 3;
+        return switch (gridCoords.row()) {
             case 0, 1, 2 -> columnOffset;
             case 3, 4, 5 -> columnOffset + 3;
             default -> columnOffset + 6;

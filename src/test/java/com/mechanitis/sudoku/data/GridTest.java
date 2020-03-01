@@ -1,6 +1,5 @@
 package com.mechanitis.sudoku.data;
 
-
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -8,6 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static com.mechanitis.sudoku.data.GridCoords.gridCoords;
 import static com.mechanitis.sudoku.data.Position.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -19,7 +19,7 @@ class GridTest {
     @DisplayName("Should be able to get a specific cell with grid coords")
     void shouldBeAbleToGetASpecificCellWithGridCoords() {
         //(maybe microtypes are useful for this?)
-        Cell cell = grid.cellAt(new GridCoords(0, 0));
+        Cell cell = grid.cellAt(gridCoords(0, 0));
         assertNotNull(cell);
     }
 
@@ -30,7 +30,7 @@ class GridTest {
         grid.changeCell().onRow(1).atPosition(3).toValue(5);
 
         // then
-        assertEquals(5, grid.cellAt(new GridCoords(1, 3)).getValue());
+        assertEquals(5, grid.cellAt(gridCoords(1, 3)).getValue());
     }
 
     @Nested
@@ -48,7 +48,7 @@ class GridTest {
         @Test
         @DisplayName("Should get the correct existing value")
         void getTheCorrectExistingValue() {
-            assertEquals(value, grid.cellAt(new GridCoords(rowIndex, columnIndex)).getValue());
+            assertEquals(value, grid.cellAt(gridCoords(rowIndex, columnIndex)).getValue());
         }
 
         @Test
@@ -56,15 +56,15 @@ class GridTest {
         void shouldBeAbleToChangeAValue() {
             int newValue = 9;
             grid.changeCell().onRow(rowIndex).atPosition(columnIndex).toValue(newValue);
-            assertEquals(newValue, grid.cellAt(new GridCoords(rowIndex, columnIndex)).getValue());
+            assertEquals(newValue, grid.cellAt(gridCoords(rowIndex, columnIndex)).getValue());
         }
 
         @Test
         @DisplayName("Should not be able to change a value by accessing the cell directly")
         void shouldNotBeAbleToChangeAValueUsingCellAt() {
-            grid.cellAt(new GridCoords(rowIndex, columnIndex)).setValue(9);
+            grid.cellAt(gridCoords(rowIndex, columnIndex)).setValue(9);
 
-            assertEquals(value, grid.cellAt(new GridCoords(rowIndex, columnIndex)).getValue());
+                assertEquals(value, grid.cellAt(gridCoords(rowIndex, columnIndex)).getValue());
         }
 
         @Nested
@@ -131,7 +131,7 @@ class GridTest {
 
         assertEquals(value, grid.rowAt(rowIndex).cellAt(columnIndex).getValue());
         assertEquals(value, grid.columnAt(columnIndex).cellAt(rowIndex).getValue());
-        GridCoords gridCoords = new GridCoords(rowIndex, columnIndex);
+        GridCoords gridCoords = gridCoords(rowIndex, columnIndex);
         assertEquals(value, grid.boxAt(CentreLeft).cellAt(gridCoords).getValue());
     }
 
@@ -157,7 +157,7 @@ class GridTest {
         // the Grid one would expect to access purely by gridCoords
         BoxCoords boxCoords = new BoxCoords(1, 2);
         assertEquals(expectedValue, grid.boxAt(BottomRight).cellAt(boxCoords).getValue());
-        GridCoords gridCoords = new GridCoords(7, 8);
+        GridCoords gridCoords = gridCoords(7, 8);
         assertEquals(expectedValue, grid.boxAt(BottomRight).cellAt(gridCoords).getValue());
     }
 

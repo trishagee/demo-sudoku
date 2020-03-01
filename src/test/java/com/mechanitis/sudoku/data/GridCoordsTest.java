@@ -27,10 +27,10 @@ class GridCoordsTest {
     void shouldConvertGridCoordinatesIntoBoxCoordinates(int rowIndex, int columnIndex,
                                                         int boxRowIndex,
                                                         int boxColumnIndex) {
-        GridCoords gridCoords = new GridCoords(rowIndex, columnIndex);
-        BoxCoords boxCoords = gridCoords.toBoxCoords();
-        assertEquals(boxRowIndex, boxCoords.rowIndex());
-        assertEquals(boxColumnIndex, boxCoords.columnIndex());
+        var gridCoords = new GridCoords(rowIndex, columnIndex);
+        var boxCoords = gridCoords.toBoxCoords();
+        assertEquals(boxRowIndex, boxCoords.row());
+        assertEquals(boxColumnIndex, boxCoords.column());
     }
 
     static Stream<Arguments> gridCoordinatesToBoxCoordinates() {

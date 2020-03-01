@@ -1,5 +1,7 @@
 package com.mechanitis.sudoku.data;
 
+import static com.mechanitis.sudoku.data.GridCoords.gridCoords;
+
 public class Grid {
     private static final int SIZE = 9;
     // the data is effectively duplicated in both, but it makes it easy to access
@@ -32,7 +34,7 @@ public class Grid {
     }
 
     public Cell cellAt(GridCoords gridCoords) {
-        return rows[gridCoords.rowIndex()].cellAt(gridCoords.columnIndex());
+        return rows[gridCoords.row()].cellAt(gridCoords.column());
     }
 
     class Mutator {
@@ -53,7 +55,7 @@ public class Grid {
             rows[rowIndex].changeCell().atPosition(columnIndex).toValue(value);
             columns[columnIndex].changeCell().atPosition(rowIndex).toValue(value);
             // this is not super pretty, there must be a neater way
-            GridCoords gridCoords = new GridCoords(rowIndex, columnIndex);
+            GridCoords gridCoords = gridCoords(rowIndex, columnIndex);
             boxes[Position.indexFromCoords(gridCoords)].changeCell().atPosition(gridCoords).toValue(value);
         }
     }

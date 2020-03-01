@@ -1,13 +1,17 @@
 package com.mechanitis.sudoku.data;
 
-record GridCoords(int rowIndex, int columnIndex) implements Coords {
+record GridCoords(int row, int column) implements Coords {
     public GridCoords {
-        if (rowIndex < 0 || columnIndex < 0 || rowIndex > 8 || columnIndex > 8) {
-            throw new InvalidValueException("Box coordinates are 0 to 8 inclusive");
+        if (row < 0 || column < 0 || row > 8 || column > 8) {
+            throw new InvalidValueException("Grid coordinates are 0 to 8 inclusive");
         }
     }
 
+    static GridCoords gridCoords(int row, int column) {
+        return new GridCoords(row, column);
+    }
+
     BoxCoords toBoxCoords() {
-        return new BoxCoords(rowIndex % 3, columnIndex % 3);
+        return new BoxCoords(row % 3, column % 3);
     }
 }

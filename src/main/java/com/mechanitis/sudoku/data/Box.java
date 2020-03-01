@@ -71,7 +71,7 @@ public class Box implements Block {
     }
 
     Cell cellAt(BoxCoords boxCoords) {
-        return block.cellAt(get1DIndexFromCoords(boxCoords.rowIndex(), boxCoords.columnIndex()));
+        return block.cellAt(get1DIndexFromCoords(boxCoords.row(), boxCoords.column()));
     }
 
     class Mutator {
@@ -95,7 +95,7 @@ public class Box implements Block {
         }
 
         Mutator atPosition(BoxCoords boxCoords) {
-            this.mutator = mutator.atPosition(get1DIndexFromCoords(boxCoords.rowIndex(), boxCoords.columnIndex()));
+            this.mutator = mutator.atPosition(get1DIndexFromCoords(boxCoords.row(), boxCoords.column()));
             return this;
         }
     }

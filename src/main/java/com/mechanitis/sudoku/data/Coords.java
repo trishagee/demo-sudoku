@@ -1,7 +1,7 @@
 package com.mechanitis.sudoku.data;
 
 interface Coords {
-    int rowIndex();
+    int row();
 
-    int columnIndex();
+    int column();
 }
