@@ -1,11 +1,7 @@
 package com.mechanitis.sudoku.data;
 
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -13,10 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static com.mechanitis.sudoku.data.Position.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class GridTest {
@@ -35,14 +28,6 @@ class GridTest {
     }
 
     @Test
-    @DisplayName("Should be able to get a specific cell")
-    void shouldBeAbleToGetASpecificCell() {
-        //(maybe microtypes are useful for this?)
-        Cell cell = grid.cellAt(0, 0);
-        assertNotNull(cell);
-    }
-
-    @Test
     @DisplayName("Should be able to get a specific cell with grid coords")
     void shouldBeAbleToGetASpecificCellWithGridCoords() {
         //(maybe microtypes are useful for this?)
@@ -54,7 +39,7 @@ class GridTest {
     @DisplayName("Should be able to set the value of a specific cell")
     void shouldBeAbleToSetTheValueOfASpecificCell() {
         grid.changeCell().onRow(1).atPosition(3).toValue(5);
-        assertEquals(5, grid.cellAt(1, 3).getValue());
+        assertEquals(5, grid.cellAt(new GridCoords(1, 3)).getValue());
     }
 
     @Nested
@@ -72,7 +57,7 @@ class GridTest {
         @Test
         @DisplayName("Should get the correct existing value")
         void getTheCorrectExistingValue() {
-            assertEquals(value, grid.cellAt(rowIndex, columnIndex).getValue());
+            assertEquals(value, grid.cellAt(new GridCoords(rowIndex, columnIndex)).getValue());
         }
 
         @Test
@@ -80,7 +65,7 @@ class GridTest {
         void shouldBeAbleToChangeAValue() {
             int newValue = 9;
             grid.changeCell().onRow(rowIndex).atPosition(columnIndex).toValue(newValue);
-            assertEquals(newValue, grid.cellAt(rowIndex, columnIndex).getValue());
+            assertEquals(newValue, grid.cellAt(new GridCoords(rowIndex, columnIndex)).getValue());
         }
 
     }

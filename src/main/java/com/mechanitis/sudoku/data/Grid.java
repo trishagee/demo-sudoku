@@ -18,10 +18,6 @@ public class Grid {
         }
     }
 
-    public Cell cellAt(int rowIndex, int columnIndex) {
-        return rows[rowIndex].cellAt(columnIndex);
-    }
-
     public Row rowAt(int rowIndex) {
         return rows[rowIndex];
     }
