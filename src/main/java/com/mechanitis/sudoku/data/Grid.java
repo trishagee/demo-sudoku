@@ -38,6 +38,10 @@ public class Grid {
         return new Mutator();
     }
 
+    public Cell cellAt(GridCoords gridCoords) {
+        return rows[gridCoords.rowIndex()].cellAt(gridCoords.columnIndex());
+    }
+
     class Mutator {
         private int rowIndex;
         private int columnIndex;

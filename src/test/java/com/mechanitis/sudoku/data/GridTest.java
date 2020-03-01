@@ -43,6 +43,14 @@ class GridTest {
     }
 
     @Test
+    @DisplayName("Should be able to get a specific cell with grid coords")
+    void shouldBeAbleToGetASpecificCellWithGridCoords() {
+        //(maybe microtypes are useful for this?)
+        Cell cell = grid.cellAt(new GridCoords(0, 0));
+        assertNotNull(cell);
+    }
+
+    @Test
     @DisplayName("Should be able to set the value of a specific cell")
     void shouldBeAbleToSetTheValueOfASpecificCell() {
         grid.changeCell().onRow(1).atPosition(3).toValue(5);
