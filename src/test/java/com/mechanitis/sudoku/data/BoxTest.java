@@ -55,7 +55,7 @@ class BoxTest {
         var boxCoords = boxCoords(0, 0);
         assumeTrue(box.cellAt(boxCoords).getValue() == 6);
 
-        assertThrows(InvalidValueException.class,
+        assertThrows(DuplicateValueException.class,
                 () -> box.changeCell().atPosition(boxCoords(2, 1)).toValue(3));
     }
 }

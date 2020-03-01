@@ -1,10 +1,6 @@
 package com.mechanitis.sudoku.data;
 
-import org.junit.jupiter.api.Assumptions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -13,10 +9,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.util.stream.Collectors.toUnmodifiableList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class BlockImplTest {
 
@@ -65,11 +58,10 @@ class BlockImplTest {
         assertEquals(expectedValue, block.cellAt(3).getValue());
     }
 
-
     @Test
     @DisplayName("Should not be able to create a block with duplicate values")
     void shouldNotBeAbleToCreateABlockWithDuplicateValues() {
-        assertThrows(InvalidValueException.class, () -> new BlockImpl(4, 4, 6, 8, 1, 2, 9, 7, 5));
+        assertThrows(DuplicateValueException.class, () -> new BlockImpl(4, 4, 6, 8, 1, 2, 9, 7, 5));
     }
 
     @ParameterizedTest(name = "{0}")
@@ -130,7 +122,7 @@ class BlockImplTest {
             @Test
             @DisplayName("duplicate values")
             void shouldNotAllowDuplicateValues() {
-                assertThrows(InvalidValueException.class,
+                assertThrows(DuplicateValueException.class,
                              () -> block.changeCell().atPosition(index + 1).toValue(value));
             }
 
@@ -196,17 +188,6 @@ class BlockImplTest {
             int indexForTheValue8 = 5;
             block.changeCell().atPosition(indexForTheValue8).toValue(newValue);
             assertEquals(newValue, block.cellAt(indexForTheValue8).getValue());
-        }
-
-        @Nested
-        @DisplayName("Should not allow ")
-        class ShouldNotAllow {
-            @Test
-            @DisplayName("duplicate values")
-            void shouldNotAllowDuplicateValues() {
-                assertThrows(InvalidValueException.class,
-                             () -> block.changeCell().atPosition(2).toValue(6));
-            }
         }
     }
 

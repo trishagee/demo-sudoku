@@ -33,7 +33,7 @@ class Cell {
 
     private void validateValue(int value) {
         if (value < 1 || value > 9) {
-            throw new InvalidValueException();
+            throw new InvalidValueException("A cell should have a value of 1-9 inclusive");
         }
     }
 

@@ -70,24 +70,27 @@ class GridTest {
         @Nested
         @DisplayName("Should error")
         class ShouldError {
+            /* All of these are covered by row/column/box unit tests but for now I want it here too as
+               it is a requirement of the Grid too.
+             */
             @Test
             @DisplayName("when trying to insert a value that is already duplicated in the row")
             void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheRow() {
-                assertThrows(InvalidValueException.class,
+                assertThrows(DuplicateValueException.class,
                         () -> grid.changeCell().onRow(rowIndex).atPosition(8).toValue(value));
             }
 
             @Test
             @DisplayName("when trying to insert a value that is already duplicated in the column")
             void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheColumn() {
-                assertThrows(InvalidValueException.class,
+                assertThrows(DuplicateValueException.class,
                         () -> grid.changeCell().onRow(8).atPosition(columnIndex).toValue(value));
             }
 
             @Test
             @DisplayName("when trying to insert a value that is already duplicated in the box")
             void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheBox() {
-                assertThrows(InvalidValueException.class,
+                assertThrows(DuplicateValueException.class,
                         () -> grid.changeCell().onRow(8).atPosition(4).toValue(value));
             }
         }

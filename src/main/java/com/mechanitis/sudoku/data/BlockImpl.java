@@ -1,15 +1,9 @@
 package com.mechanitis.sudoku.data;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.Spliterator;
-import java.util.Spliterators;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-
-import static java.util.Arrays.asList;
 
 public class BlockImpl implements Block {
     private final Cell[] cells = new Cell[9];
@@ -23,12 +17,8 @@ public class BlockImpl implements Block {
     }
 
     BlockImpl(int i0, int i1, int i2, int i3, int i4, int i5, int i6, int i7, int i8) {
-        cellValues.addAll(asList(i0, i1, i2, i3, i4, i5, i6, i7, i8));
-        if (cellValues.size() < 9) {
-            // if, after adding all 9 arguments into the set there are not actually nine elements in the set, there's
-            // at least one duplicate
-            throw new InvalidValueException("Duplicate values are not allowed");
-        }
+        List.of(i0, i1, i2, i3, i4, i5, i6, i7, i8)
+                .forEach(this::checkForDuplicatesAndTrackAddedValues);
         cells[0] = new Cell(i0);
         cells[1] = new Cell(i1);
         cells[2] = new Cell(i2);
@@ -75,6 +65,12 @@ public class BlockImpl implements Block {
         return Spliterators.spliterator(cells, Spliterator.ORDERED);
     }
 
+    private void checkForDuplicatesAndTrackAddedValues(int value) {
+        if (!cellValues.add(value)) {
+            throw new DuplicateValueException(value);
+        }
+    }
+
     private void validatePosition(int position) {
         if (position < 0 || position > cells.length - 1) {
             throw new InvalidPositionException();
@@ -98,7 +94,7 @@ public class BlockImpl implements Block {
             if (cellValues.add(value)) {
                 cell.setValue(value);
             } else {
-                throw new InvalidValueException("This is a duplicate");
+                throw new DuplicateValueException(value);
             }
         }
 
