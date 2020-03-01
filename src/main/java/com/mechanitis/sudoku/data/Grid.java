@@ -1,13 +1,10 @@
 package com.mechanitis.sudoku.data;
 
-/**
- * 0,0 0,1 0,2
- */
 public class Grid {
     private static final int SIZE = 9;
     // the data is effectively duplicated in both, but it makes it easy to access
-    Row[] rows = new Row[SIZE];
-    Column[] columns = new Column[SIZE];
+    private Row[] rows = new Row[SIZE];
+    private Column[] columns = new Column[SIZE];
     private final Box[] boxes = new Box[SIZE];
 
     public Grid() {

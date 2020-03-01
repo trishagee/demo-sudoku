@@ -15,17 +15,6 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 class GridTest {
     private final Grid grid = new Grid();
 
-    @Test
-    @DisplayName("Should have nine rows")
-    void shouldHaveNineRows() {
-        assertEquals(9, grid.rows.length);
-    }
-
-    @Test
-    @DisplayName("Should have nine columns")
-    void shouldHaveNineColumns() {
-        assertEquals(9, grid.columns.length);
-    }
 
     @Test
     @DisplayName("Should be able to get a specific cell with grid coords")
@@ -112,29 +101,37 @@ class GridTest {
         assertEquals(value, grid.boxAt(CentreLeft).cellAt(gridCoords).getValue());
     }
 
-    @Test
-    @DisplayName("Should error if trying to insert a value that is already duplicated in the row")
-    void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheRow() {
-        grid.changeCell().onRow(2).atPosition(3).toValue(7);
+    @Nested
+    @DisplayName("When the grid contains a value")
+    class WhenValueExists {
 
-        assertThrows(InvalidValueException.class, () -> grid.changeCell().onRow(2).atPosition(8).toValue(7));
-    }
+        @BeforeEach
+        void insertValue() {
+            grid.changeCell().onRow(2).atPosition(3).toValue(7);
+        }
 
-    @Test
-    @DisplayName("Should error if trying to insert a value that is already duplicated in the column")
-    void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheColumn() {
-        grid.changeCell().onRow(2).atPosition(3).toValue(7);
+        @Nested
+        @DisplayName("Should error")
+        class ShouldError {
+            @Test
+            @DisplayName("Should error if trying to insert a value that is already duplicated in the row")
+            void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheRow() {
+                assertThrows(InvalidValueException.class, () -> grid.changeCell().onRow(2).atPosition(8).toValue(7));
+            }
 
-        assertThrows(InvalidValueException.class, () -> grid.changeCell().onRow(8).atPosition(3).toValue(7));
-    }
+            @Test
+            @DisplayName("Should error if trying to insert a value that is already duplicated in the column")
+            void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheColumn() {
+                assertThrows(InvalidValueException.class, () -> grid.changeCell().onRow(8).atPosition(3).toValue(7));
+            }
 
-    @Test
-    @DisplayName("Should error if trying to insert a value that is already duplicated in the box")
-    @Disabled("Not implemented yet")
-    void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheBox() {
-        grid.changeCell().onRow(0).atPosition(0).toValue(7);
-
-        assertThrows(InvalidValueException.class, () -> grid.changeCell().onRow(1).atPosition(1).toValue(7));
+            @Test
+            @DisplayName("Should error if trying to insert a value that is already duplicated in the box")
+            @Disabled("Not implemented yet")
+            void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheBox() {
+                assertThrows(InvalidValueException.class, () -> grid.changeCell().onRow(1).atPosition(1).toValue(7));
+            }
+        }
     }
 
     @DisplayName("Should get the correct box for a position")
@@ -198,4 +195,12 @@ class GridTest {
     // - Provide a better way of converting between grid and box coords
     // - reduce duplication in PositionTest to have just one set of data
     // - see if there's a way to simplify all the helpers in Position so that there aren't so many
+
+    // Solver
+    // - Benchmark
+
+    // Generator
+    // - Different approaches, e.g. brute force, "which numbers are left to try"
+    // - Benchmark
+
 }
