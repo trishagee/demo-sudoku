@@ -91,6 +91,10 @@ public class BlockImpl implements Block {
         }
 
         void toValue(int value) {
+            if (cell == null) {
+                // TODO: actually this is horrible - a runtime exception instead of some sort of compile-time check?
+                throw new InvalidOperationException("A cell must be selected in order to change it");
+            }
             if (cellValues.add(value)) {
                 cell.setValue(value);
             } else {

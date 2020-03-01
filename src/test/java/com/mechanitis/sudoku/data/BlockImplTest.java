@@ -133,6 +133,14 @@ class BlockImplTest {
                 assertThrows(InvalidValueException.class,
                              () -> block.changeCell().atPosition(index + 1).toValue(value));
             }
+
+            @Test
+            @DisplayName("changing a value before defining which one")
+            //TODO this really should be a compile time check
+            void shouldNotAllowChangingAValueWithoutPosition() {
+                assertThrows(InvalidOperationException.class,
+                        () -> block.changeCell().toValue(value + 1));
+            }
         }
     }
 
