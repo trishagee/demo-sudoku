@@ -26,7 +26,10 @@ class GridTest {
     @Test
     @DisplayName("Should be able to set the value of a specific cell")
     void shouldBeAbleToSetTheValueOfASpecificCell() {
+        // when
         grid.changeCell().onRow(1).atPosition(3).toValue(5);
+
+        // then
         assertEquals(5, grid.cellAt(new GridCoords(1, 3)).getValue());
     }
 
@@ -56,6 +59,30 @@ class GridTest {
             assertEquals(newValue, grid.cellAt(new GridCoords(rowIndex, columnIndex)).getValue());
         }
 
+        @Nested
+        @DisplayName("Should error")
+        class ShouldError {
+            @Test
+            @DisplayName("when trying to insert a value that is already duplicated in the row")
+            void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheRow() {
+                assertThrows(InvalidValueException.class,
+                        () -> grid.changeCell().onRow(rowIndex).atPosition(8).toValue(value));
+            }
+
+            @Test
+            @DisplayName("when trying to insert a value that is already duplicated in the column")
+            void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheColumn() {
+                assertThrows(InvalidValueException.class,
+                        () -> grid.changeCell().onRow(8).atPosition(columnIndex).toValue(value));
+            }
+
+            @Test
+            @DisplayName("when trying to insert a value that is already duplicated in the box")
+            void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheBox() {
+                assertThrows(InvalidValueException.class,
+                        () -> grid.changeCell().onRow(8).atPosition(4).toValue(value));
+            }
+        }
     }
 
     @Test
@@ -98,38 +125,6 @@ class GridTest {
         assertEquals(value, grid.columnAt(columnIndex).cellAt(rowIndex).getValue());
         GridCoords gridCoords = new GridCoords(rowIndex, columnIndex);
         assertEquals(value, grid.boxAt(CentreLeft).cellAt(gridCoords).getValue());
-    }
-
-    @Nested
-    @DisplayName("When the grid contains a value")
-    class WhenValueExists {
-
-        @BeforeEach
-        void insertValue() {
-            grid.changeCell().onRow(2).atPosition(3).toValue(7);
-        }
-
-        @Nested
-        @DisplayName("Should error")
-        class ShouldError {
-            @Test
-            @DisplayName("Should error if trying to insert a value that is already duplicated in the row")
-            void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheRow() {
-                assertThrows(InvalidValueException.class, () -> grid.changeCell().onRow(2).atPosition(8).toValue(7));
-            }
-
-            @Test
-            @DisplayName("Should error if trying to insert a value that is already duplicated in the column")
-            void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheColumn() {
-                assertThrows(InvalidValueException.class, () -> grid.changeCell().onRow(8).atPosition(3).toValue(7));
-            }
-
-            @Test
-            @DisplayName("Should error if trying to insert a value that is already duplicated in the box")
-            void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheBox() {
-                assertThrows(InvalidValueException.class, () -> grid.changeCell().onRow(1).atPosition(4).toValue(7));
-            }
-        }
     }
 
     @DisplayName("Should get the correct box for a position")
