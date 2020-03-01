@@ -15,7 +15,6 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 class GridTest {
     private final Grid grid = new Grid();
 
-
     @Test
     @DisplayName("Should be able to get a specific cell with grid coords")
     void shouldBeAbleToGetASpecificCellWithGridCoords() {
@@ -127,9 +126,8 @@ class GridTest {
 
             @Test
             @DisplayName("Should error if trying to insert a value that is already duplicated in the box")
-            @Disabled("Not implemented yet")
             void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheBox() {
-                assertThrows(InvalidValueException.class, () -> grid.changeCell().onRow(1).atPosition(1).toValue(7));
+                assertThrows(InvalidValueException.class, () -> grid.changeCell().onRow(1).atPosition(4).toValue(7));
             }
         }
     }
