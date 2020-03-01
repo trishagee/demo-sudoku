@@ -59,6 +59,14 @@ class GridTest {
             assertEquals(newValue, grid.cellAt(new GridCoords(rowIndex, columnIndex)).getValue());
         }
 
+        @Test
+        @DisplayName("Should not be able to change a value by accessing the cell directly")
+        void shouldNotBeAbleToChangeAValueUsingCellAt() {
+            grid.cellAt(new GridCoords(rowIndex, columnIndex)).setValue(9);
+
+            assertEquals(value, grid.cellAt(new GridCoords(rowIndex, columnIndex)).getValue());
+        }
+
         @Nested
         @DisplayName("Should error")
         class ShouldError {

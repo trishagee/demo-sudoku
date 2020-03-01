@@ -3,8 +3,8 @@ package com.mechanitis.sudoku.data;
 public class Grid {
     private static final int SIZE = 9;
     // the data is effectively duplicated in both, but it makes it easy to access
-    private Row[] rows = new Row[SIZE];
-    private Column[] columns = new Column[SIZE];
+    private final Row[] rows = new Row[SIZE];
+    private final Column[] columns = new Column[SIZE];
     private final Box[] boxes = new Box[SIZE];
 
     public Grid() {
