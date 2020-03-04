@@ -12,10 +12,6 @@ public class Column implements Block {
         block = new BlockImpl();
     }
 
-    Column(int i0, int i1, int i2, int i3, int i4, int i5, int i6, int i7, int i8) {
-        block = new BlockImpl(i0, i1, i2, i3, i4, i5, i6, i7, i8);
-    }
-
     //currently for testing.
     public int getSize() {
         return block.getSize();
@@ -27,10 +23,6 @@ public class Column implements Block {
      */
     public Cell cellAt(int position) {
         return block.cellAt(position);
-    }
-
-    public BlockImpl.Mutator changeCell() {
-        return block.changeCell();
     }
 
     public Stream<Cell> stream() {
@@ -50,5 +42,9 @@ public class Column implements Block {
     @Override
     public Spliterator<Cell> spliterator() {
         return block.spliterator();
+    }
+
+    BlockImpl.Mutator changeCell(int position) {
+        return block.changeCell(position);
     }
 }

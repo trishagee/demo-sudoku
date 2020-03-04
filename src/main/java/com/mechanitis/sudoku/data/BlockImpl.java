@@ -41,8 +41,9 @@ public class BlockImpl implements Block {
         return Cell.copy(cells[position]);
     }
 
-    public Mutator changeCell() {
-        return new Mutator();
+    Mutator changeCell(int position) {
+        validatePosition(position);
+        return new Mutator(position);
     }
 
     @Override
@@ -77,20 +78,16 @@ public class BlockImpl implements Block {
         }
     }
 
+    // why am I using a mutator? I'm not really sure. I think I wanted to a) provide a nice API and b) protect
+    // against mutability issue by controlling access through the row/column/box.
     class Mutator {
-        // TODO: need to work out how to enforce ordering here, i.e. you have to select a cell before you can change it
-        private Cell cell;
+        private final Cell cell;
 
-        Mutator atPosition(int position) {
+        private Mutator(int position) {
             cell = cells[position];
-            return this;
         }
 
         void toValue(int value) {
-            if (cell == null) {
-                // TODO: actually this is horrible - a runtime exception instead of some sort of compile-time check?
-                throw new InvalidOperationException("A cell must be selected in order to change it");
-            }
             if (cellValues.add(value)) {
                 cell.setValue(value);
             } else {

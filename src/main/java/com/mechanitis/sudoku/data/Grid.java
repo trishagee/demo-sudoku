@@ -52,11 +52,11 @@ public class Grid {
         }
 
         void toValue(int value) {
-            rows[rowIndex].changeCell().atPosition(columnIndex).toValue(value);
-            columns[columnIndex].changeCell().atPosition(rowIndex).toValue(value);
+            rows[rowIndex].changeCell(columnIndex).toValue(value);
+            columns[columnIndex].changeCell(rowIndex).toValue(value);
             // this is not super pretty, there must be a neater way
             GridCoords gridCoords = gridCoords(rowIndex, columnIndex);
-            boxes[Position.indexFromCoords(gridCoords)].changeCell().atPosition(gridCoords).toValue(value);
+            boxes[Position.indexFromCoords(gridCoords)].changeCell(gridCoords).toValue(value);
         }
     }
 

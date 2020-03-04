@@ -29,7 +29,7 @@ class BoxTest {
     void shouldSetEmptyFromCoordinate() {
         var boxCoords = boxCoords(1, 2);
         assumeTrue(box.cellAt(boxCoords).getValue() == 3);
-        box.changeCell().atPosition(boxCoords).toEmpty();
+        box.changeCell(boxCoords).toEmpty();
 
         assertTrue(box.cellAt(boxCoords).isEmpty());
     }
@@ -37,16 +37,13 @@ class BoxTest {
     @Test
     @DisplayName("Should set the value from coordinate")
     void shouldSetTheValueFromCoordinate() {
-        var coordsForPositionWithValueWeWant = boxCoords(2, 2);
         //if we want to use a value, we first have to remove it from its original position
-        assumeTrue(box.cellAt(coordsForPositionWithValueWeWant).getValue() == 9);
-        box.changeCell().atPosition(coordsForPositionWithValueWeWant).toEmpty();
-        assumeTrue(box.cellAt(coordsForPositionWithValueWeWant).getValue() == 8);
+        box.changeCell(boxCoords(2, 2)).toEmpty();
 
-        var coordsForPositionWeWantToUpdate = boxCoords(2, 1);
-        box.changeCell().atPosition(coordsForPositionWeWantToUpdate).toValue(9);
+        var positionToUpdate = boxCoords(2, 1);
+        box.changeCell(positionToUpdate).toValue(9);
 
-        assertEquals(9, box.cellAt(coordsForPositionWeWantToUpdate).getValue());
+        assertEquals(9, box.cellAt(positionToUpdate).getValue());
     }
 
     @Test
@@ -56,6 +53,6 @@ class BoxTest {
         assumeTrue(box.cellAt(boxCoords).getValue() == 6);
 
         assertThrows(DuplicateValueException.class,
-                () -> box.changeCell().atPosition(boxCoords(2, 1)).toValue(3));
+                () -> box.changeCell(boxCoords(2, 1)).toValue(3));
     }
 }

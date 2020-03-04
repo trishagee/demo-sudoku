@@ -39,10 +39,6 @@ public class Box implements Block {
         return block.cellAt(position);
     }
 
-    public Mutator changeCell() {
-        return new Mutator(block.changeCell());
-    }
-
     public Stream<Cell> stream() {
         return block.stream();
     }
@@ -74,9 +70,17 @@ public class Box implements Block {
         return block.cellAt(get1DIndexFromCoords(boxCoords.row(), boxCoords.column()));
     }
 
-    class Mutator {
-        // TODO: need to work out how to enforce ordering here, i.e. you have to select a cell before you can change it
-        private BlockImpl.Mutator mutator;
+    Mutator changeCell(BoxCoords boxCoords) {
+        return new Mutator(block.changeCell(get1DIndexFromCoords(boxCoords.row(), boxCoords.column())));
+    }
+
+    Mutator changeCell(GridCoords gridCoords) {
+        var boxCoords = gridCoords.toBoxCoords();
+        return new Mutator(block.changeCell(get1DIndexFromCoords(boxCoords.row(), boxCoords.column())));
+    }
+
+    static class Mutator {
+        private final BlockImpl.Mutator mutator;
 
         private Mutator(BlockImpl.Mutator mutator) {
             this.mutator = mutator;
@@ -88,15 +92,6 @@ public class Box implements Block {
 
         void toEmpty() {
             mutator.toEmpty();
-        }
-
-        Mutator atPosition(GridCoords gridCoords) {
-            return atPosition(gridCoords.toBoxCoords());
-        }
-
-        Mutator atPosition(BoxCoords boxCoords) {
-            this.mutator = mutator.atPosition(get1DIndexFromCoords(boxCoords.row(), boxCoords.column()));
-            return this;
         }
     }
 

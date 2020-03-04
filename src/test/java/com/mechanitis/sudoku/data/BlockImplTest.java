@@ -53,9 +53,16 @@ class BlockImplTest {
     void shouldBeAbleToSetAValueAtAGivenPosition() {
         int expectedValue = 5;
         var block = new BlockImpl();
-        block.changeCell().atPosition(3).toValue(expectedValue);
+        block.changeCell(3).toValue(expectedValue);
 
         assertEquals(expectedValue, block.cellAt(3).getValue());
+    }
+
+    @ParameterizedTest(name = "{0}")
+    @DisplayName("Should error if using an invalid position to change cell")
+    @ValueSource(ints = {-1, 10, Integer.MAX_VALUE})
+    void shouldErrorIfUsingAnInvalidPositionToChangeCell(int position) {
+        assertThrows(InvalidPositionException.class, () -> new BlockImpl().changeCell(position));
     }
 
     @Test
@@ -81,7 +88,7 @@ class BlockImplTest {
 
         @BeforeEach
         void createBlockWithOneValue() {
-            block.changeCell().atPosition(index).toValue(value);
+            block.changeCell(index).toValue(value);
         }
 
         @Nested
@@ -92,7 +99,7 @@ class BlockImplTest {
             @Test
             @DisplayName("a change to existing value")
             void shouldAllowAChangeToExistingValue() {
-                block.changeCell().atPosition(index).toValue(newValue);
+                block.changeCell(index).toValue(newValue);
                 assertEquals(newValue, block.cellAt(index).getValue());
             }
 
@@ -100,7 +107,7 @@ class BlockImplTest {
             @DisplayName("new unique values")
             void shouldAllowNewUniqueValues() {
                 int differentPosition = index + 1;
-                block.changeCell().atPosition(differentPosition).toValue(newValue);
+                block.changeCell(differentPosition).toValue(newValue);
                 assertEquals(newValue, block.cellAt(differentPosition).getValue());
             }
 
@@ -109,8 +116,8 @@ class BlockImplTest {
             void shouldAllowRemovingAValueAndReading() {
                 int differentPosition = index + 1;
 
-                block.changeCell().atPosition(index).toEmpty();
-                block.changeCell().atPosition(differentPosition).toValue(value);
+                block.changeCell(index).toEmpty();
+                block.changeCell(differentPosition).toValue(value);
 
                 assertEquals(value, block.cellAt(differentPosition).getValue());
             }
@@ -123,15 +130,7 @@ class BlockImplTest {
             @DisplayName("duplicate values")
             void shouldNotAllowDuplicateValues() {
                 assertThrows(DuplicateValueException.class,
-                             () -> block.changeCell().atPosition(index + 1).toValue(value));
-            }
-
-            @Test
-            @DisplayName("changing a value before defining which one")
-            //TODO this really should be a compile time check
-            void shouldNotAllowChangingAValueWithoutPosition() {
-                assertThrows(InvalidOperationException.class,
-                        () -> block.changeCell().toValue(value + 1));
+                             () -> block.changeCell(index + 1).toValue(value));
             }
         }
     }
@@ -183,10 +182,10 @@ class BlockImplTest {
             int newValue = 4;
             int indexForTheValue4 = 3;
             Assumptions.assumeTrue(block.cellAt(indexForTheValue4).getValue() == newValue);
-            block.changeCell().atPosition(indexForTheValue4).toEmpty(); // this should have held the value 4
+            block.changeCell(indexForTheValue4).toEmpty(); // this should have held the value 4
 
             int indexForTheValue8 = 5;
-            block.changeCell().atPosition(indexForTheValue8).toValue(newValue);
+            block.changeCell(indexForTheValue8).toValue(newValue);
             assertEquals(newValue, block.cellAt(indexForTheValue8).getValue());
         }
     }
