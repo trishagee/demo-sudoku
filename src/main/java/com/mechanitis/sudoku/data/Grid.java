@@ -27,33 +27,27 @@ public class Grid {
         return boxes[position.getIndex()];
     }
 
-    public Mutator changeCell() {
-        return new Mutator();
+    public Mutator changeCell(GridCoords gridCoords) {
+        return new Mutator(gridCoords);
     }
 
     public Cell cellAt(GridCoords gridCoords) {
         return rows[gridCoords.row()].cellAt(gridCoords.column());
     }
 
+    // TODO: not sure still if we need the mutator.
     class Mutator {
-        private int rowIndex;
-        private int columnIndex;
+        private final GridCoords gridCoords;
 
-        Mutator onRow(int rowIndex) {
-            this.rowIndex = rowIndex;
-            return this;
-        }
-
-        Mutator atPosition(int columnIndex) {
-            this.columnIndex = columnIndex;
-            return this;
+        private Mutator(GridCoords gridCoords) {
+            this.gridCoords = gridCoords;
         }
 
         void toValue(int value) {
+            var rowIndex = gridCoords.row();
+            var columnIndex = gridCoords.column();
             rows[rowIndex].changeCell(columnIndex).toValue(value);
             columns[columnIndex].changeCell(rowIndex).toValue(value);
-            // TODO: this is not super pretty, there must be a neater way
-            GridCoords gridCoords = new GridCoords(rowIndex, columnIndex);
             boxes[Position.indexFromCoords(gridCoords)].changeCell(gridCoords).toValue(value);
         }
     }
