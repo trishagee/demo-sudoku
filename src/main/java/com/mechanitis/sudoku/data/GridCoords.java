@@ -7,10 +7,6 @@ record GridCoords(int row, int column) implements Coords {
         }
     }
 
-    static GridCoords gridCoords(int row, int column) {
-        return new GridCoords(row, column);
-    }
-
     BoxCoords toBoxCoords() {
         return new BoxCoords(row % 3, column % 3);
     }

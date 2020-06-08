@@ -1,7 +1,5 @@
 package com.mechanitis.sudoku.data;
 
-import static com.mechanitis.sudoku.data.GridCoords.gridCoords;
-
 public class Grid {
     private static final int SIZE = 9;
     // the data is effectively duplicated in both, but it makes it easy to access
@@ -54,8 +52,8 @@ public class Grid {
         void toValue(int value) {
             rows[rowIndex].changeCell(columnIndex).toValue(value);
             columns[columnIndex].changeCell(rowIndex).toValue(value);
-            // this is not super pretty, there must be a neater way
-            GridCoords gridCoords = gridCoords(rowIndex, columnIndex);
+            // TODO: this is not super pretty, there must be a neater way
+            GridCoords gridCoords = new GridCoords(rowIndex, columnIndex);
             boxes[Position.indexFromCoords(gridCoords)].changeCell(gridCoords).toValue(value);
         }
     }
