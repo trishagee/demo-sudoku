@@ -21,7 +21,7 @@ class BoxPositionTest {
     @DisplayName("Should return the correct index for grid coordinates")
     @MethodSource("com.mechanitis.sudoku.data.GridBoxAndPositionData#gridCoordinatesBoxCoordinatesAndPosition")
     void shouldReturnTheCorrectPositionForGridCoordinates(final GridCoords gridCoords, final BoxCoords boxCoords,
-                                                       final int index, final BoxPosition boxPosition) {
+                                                          final int index, final BoxPosition boxPosition) {
         assertEquals(boxPosition, BoxPosition.fromCoords(gridCoords));
     }
 }

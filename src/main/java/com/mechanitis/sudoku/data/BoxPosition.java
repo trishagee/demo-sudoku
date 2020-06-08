@@ -1,5 +1,7 @@
 package com.mechanitis.sudoku.data;
 
+import java.util.Arrays;
+
 enum BoxPosition {
     TopLeft(0), TopCentre(1), TopRight(2),
     CentreLeft(3), CentreCentre(4), CentreRight(5),
@@ -22,16 +24,19 @@ enum BoxPosition {
 
     static BoxPosition fromCoords(GridCoords gridCoords) {
         var index = indexFromCoords(gridCoords);
-        for (int i = 0; i < values().length; i++) {
-            BoxPosition value = values()[i];
-            if (value.index == index) {
-                return value;
-            }
-        }
-        throw new RuntimeException("These grid co-ordinates don't correspond to a BoxPosition: " + gridCoords);
+        var position = Arrays.stream(values())
+                             .filter(boxPosition -> boxPosition.index == index)
+                             .findFirst();
+        return position.orElseThrow(NoSuchPositionException::new);
     }
 
     public int getIndex() {
         return index;
+    }
+
+    /**
+     * This should never happen, as there should not be a set of coordinates that does not correspond to a position
+     */
+    private static class NoSuchPositionException extends RuntimeException {
     }
 }
