@@ -7,8 +7,4 @@ record BoxCoords(int row, int column) implements Coords {
         }
     }
 
-    static BoxCoords boxCoords(int row, int column) {
-        return new BoxCoords(row, column);
-    }
-
 }
