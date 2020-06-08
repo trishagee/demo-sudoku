@@ -23,8 +23,8 @@ public class Grid {
         return columns[columnIndex];
     }
 
-    public Box boxAt(Position position) {
-        return boxes[position.getIndex()];
+    public Box boxAt(BoxPosition boxPosition) {
+        return boxes[boxPosition.getIndex()];
     }
 
     public Mutator changeCell(GridCoords gridCoords) {
@@ -48,7 +48,7 @@ public class Grid {
             var columnIndex = gridCoords.column();
             rows[rowIndex].changeCell(columnIndex).toValue(value);
             columns[columnIndex].changeCell(rowIndex).toValue(value);
-            boxes[Position.indexFromCoords(gridCoords)].changeCell(gridCoords).toValue(value);
+            boxes[BoxPosition.indexFromCoords(gridCoords)].changeCell(gridCoords).toValue(value);
         }
     }
 

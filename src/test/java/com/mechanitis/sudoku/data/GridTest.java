@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static com.mechanitis.sudoku.data.Position.*;
+import static com.mechanitis.sudoku.data.BoxPosition.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
@@ -148,10 +148,10 @@ class GridTest {
     //probably this test understands implementation details
     @ParameterizedTest(name = "{0}")
     @MethodSource("positionAndValueProvider")
-    void shouldBeAbleToGetABox(Position position, int expectedValue) {
+    void shouldBeAbleToGetABox(BoxPosition boxPosition, int expectedValue) {
         insertValuesIntoFirstCellOfEachBox();
 
-        Box box = grid.boxAt(position);
+        Box box = grid.boxAt(boxPosition);
         BoxCoords boxCoords = new BoxCoords(0, 0);
         assertEquals(expectedValue, box.cellAt(boxCoords).getValue());
     }

@@ -4,7 +4,7 @@ import org.junit.jupiter.params.provider.Arguments;
 
 import java.util.stream.Stream;
 
-import static com.mechanitis.sudoku.data.Position.*;
+import static com.mechanitis.sudoku.data.BoxPosition.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @SuppressWarnings("unused") // used as a method source in test classes

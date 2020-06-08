@@ -1,13 +1,13 @@
 package com.mechanitis.sudoku.data;
 
-enum Position {
+enum BoxPosition {
     TopLeft(0), TopCentre(1), TopRight(2),
     CentreLeft(3), CentreCentre(4), CentreRight(5),
     BottomLeft(6), BottomCentre(7), BottomRight(8);
 
     private final int index;
 
-    Position(int index) {
+    BoxPosition(int index) {
         this.index = index;
     }
 
@@ -18,6 +18,17 @@ enum Position {
             case 3, 4, 5 -> columnOffset + 3;
             default -> columnOffset + 6;
         };
+    }
+
+    static BoxPosition fromCoords(GridCoords gridCoords) {
+        var index = indexFromCoords(gridCoords);
+        for (int i = 0; i < values().length; i++) {
+            BoxPosition value = values()[i];
+            if (value.index == index) {
+                return value;
+            }
+        }
+        throw new RuntimeException("These grid co-ordinates don't correspond to a BoxPosition: " + gridCoords);
     }
 
     public int getIndex() {
