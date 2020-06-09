@@ -23,7 +23,9 @@ public class Box implements Block {
     }
 
     Box(int i0, int i1, int i2, int i3, int i4, int i5, int i6, int i7, int i8) {
-        block = new BlockImpl(i0, i1, i2, i3, i4, i5, i6, i7, i8);
+        block = new BlockImpl(i0, i1, i2,
+                              i3, i4, i5,
+                              i6, i7, i8);
     }
 
     public Stream<Cell> stream() {
@@ -45,10 +47,6 @@ public class Box implements Block {
         return block.spliterator();
     }
 
-    private int get1DIndexFromCoords(int rowIndex, int columnIndex) {
-        return (3 * rowIndex) + columnIndex;
-    }
-
     Cell cellAt(GridCoords gridCoords) {
         return cellAt(gridCoords.toBoxCoords());
     }
@@ -57,29 +55,12 @@ public class Box implements Block {
         return block.cellAt(get1DIndexFromCoords(boxCoords.row(), boxCoords.column()));
     }
 
-    Mutator changeCell(BoxCoords boxCoords) {
-        return new Mutator(block.changeCell(get1DIndexFromCoords(boxCoords.row(), boxCoords.column())));
+    BlockImpl.Mutator changeCell(BoxCoords boxCoords) {
+        return block.changeCell(get1DIndexFromCoords(boxCoords.row(), boxCoords.column()));
     }
 
-    Mutator changeCell(GridCoords gridCoords) {
-        var boxCoords = gridCoords.toBoxCoords();
-        return new Mutator(block.changeCell(get1DIndexFromCoords(boxCoords.row(), boxCoords.column())));
-    }
-
-    static class Mutator {
-        private final BlockImpl.Mutator mutator;
-
-        private Mutator(BlockImpl.Mutator mutator) {
-            this.mutator = mutator;
-        }
-
-        void toValue(int value) {
-            mutator.toValue(value);
-        }
-
-        void toEmpty() {
-            mutator.toEmpty();
-        }
+    private int get1DIndexFromCoords(int rowIndex, int columnIndex) {
+        return (3 * rowIndex) + columnIndex;
     }
 
 }

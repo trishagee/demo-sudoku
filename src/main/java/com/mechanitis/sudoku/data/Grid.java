@@ -50,11 +50,9 @@ public class Grid {
         }
 
         void toValue(int value) {
-            var rowIndex = gridCoords.row();
-            var columnIndex = gridCoords.column();
-            rows[rowIndex].changeCell(columnIndex).toValue(value);
-            columns[columnIndex].changeCell(rowIndex).toValue(value);
-            boxes.get(BoxPosition.fromCoords(gridCoords)).changeCell(gridCoords).toValue(value);
+            rows[gridCoords.row()].changeCell(gridCoords.column()).toValue(value);
+            columns[gridCoords.column()].changeCell(gridCoords.row()).toValue(value);
+            boxes.get(BoxPosition.fromCoords(gridCoords)).changeCell(gridCoords.toBoxCoords()).toValue(value);
         }
     }
 
