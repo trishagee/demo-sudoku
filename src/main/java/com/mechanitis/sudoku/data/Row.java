@@ -12,11 +12,6 @@ class Row implements Block {
         block = new BlockImpl();
     }
 
-    //currently for testing.
-    public int getSize() {
-        return block.getSize();
-    }
-
     /**
      * @param position the zero-indexed position of the desired Cell
      * @return a copy of the Cell at this position

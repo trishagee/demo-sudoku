@@ -26,15 +26,6 @@ public class Box implements Block {
         block = new BlockImpl(i0, i1, i2, i3, i4, i5, i6, i7, i8);
     }
 
-    //currently for testing.
-    public int getSize() {
-        return block.getSize();
-    }
-
-    /**
-     * @param position the zero-indexed position of the desired Cell
-     * @return a copy of the Cell at this position
-     */
     public Cell cellAt(int position) {
         return block.cellAt(position);
     }

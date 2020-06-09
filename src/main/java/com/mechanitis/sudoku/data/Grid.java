@@ -27,15 +27,15 @@ public class Grid {
         return boxes[boxPosition.getIndex()];
     }
 
-    public Mutator changeCell(GridCoords gridCoords) {
-        return new Mutator(gridCoords);
-    }
-
     public Cell cellAt(GridCoords gridCoords) {
         return rows[gridCoords.row()].cellAt(gridCoords.column());
     }
 
-    // TODO: not sure still if we need the mutator.
+    public Mutator changeCell(GridCoords gridCoords) {
+        return new Mutator(gridCoords);
+    }
+
+    // TODO: not sure still if we need the mutator. I do like the API this way though
     class Mutator {
         private final GridCoords gridCoords;
 

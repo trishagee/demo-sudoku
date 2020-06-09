@@ -1,6 +1,11 @@
 package com.mechanitis.sudoku.data;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -18,7 +23,7 @@ public class BlockImpl implements Block {
 
     BlockImpl(int i0, int i1, int i2, int i3, int i4, int i5, int i6, int i7, int i8) {
         List.of(i0, i1, i2, i3, i4, i5, i6, i7, i8)
-                .forEach(this::checkForDuplicatesAndTrackAddedValues);
+            .forEach(this::checkForDuplicatesAndTrackAddedValues);
         cells[0] = new Cell(i0);
         cells[1] = new Cell(i1);
         cells[2] = new Cell(i2);
@@ -28,11 +33,6 @@ public class BlockImpl implements Block {
         cells[6] = new Cell(i6);
         cells[7] = new Cell(i7);
         cells[8] = new Cell(i8);
-    }
-
-    @Override
-    public int getSize() {
-        return cells.length;
     }
 
     @Override
@@ -78,8 +78,10 @@ public class BlockImpl implements Block {
         }
     }
 
-    // why am I using a mutator? I'm not really sure. I think I wanted to a) provide a nice API and b) protect
-    // against mutability issue by controlling access through the row/column/box.
+    /**
+     * This Mutator a) provides a nice API and b) protects against mutability issue by controlling access through the
+     * row/column/box.
+     */
     class Mutator {
         private final Cell cell;
 

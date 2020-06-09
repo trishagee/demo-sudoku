@@ -12,13 +12,6 @@ import static java.util.stream.Collectors.toUnmodifiableList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BlockImplTest {
-
-    @Test
-    @DisplayName("Should have exactly 9 cells")
-    void shouldHaveExactly9Cells() {
-        assertEquals(9, new BlockImpl().getSize());
-    }
-
     @DisplayName("Should be able to get a cell at any position from 0 to 8 inclusive")
     @ParameterizedTest(name = "{0}")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8})
