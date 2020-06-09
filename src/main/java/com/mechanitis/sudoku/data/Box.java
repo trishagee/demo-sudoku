@@ -26,10 +26,6 @@ public class Box implements Block {
         block = new BlockImpl(i0, i1, i2, i3, i4, i5, i6, i7, i8);
     }
 
-    public Cell cellAt(int position) {
-        return block.cellAt(position);
-    }
-
     public Stream<Cell> stream() {
         return block.stream();
     }

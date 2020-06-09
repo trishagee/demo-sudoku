@@ -25,7 +25,7 @@ class BlockImplTest {
     @ParameterizedTest(name = "{0}")
     @ValueSource(ints = {-1, 9, 7847843})
     void shouldNotBeAbleToGetACellAtInvalidPosition(int index) {
-        Block block = new BlockImpl();
+        BlockImpl block = new BlockImpl();
         assertThrows(InvalidPositionException.class, () -> block.cellAt(index));
     }
 
@@ -35,7 +35,7 @@ class BlockImplTest {
         // sure, in theory you can change a cell value, but it won't change the
         // actual value in the block
         int expectedValue = 5;
-        Block block = new BlockImpl();
+        BlockImpl block = new BlockImpl();
         block.cellAt(3).setValue(expectedValue);
 
         assertNotEquals(expectedValue, block.cellAt(3).getValue());

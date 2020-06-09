@@ -8,16 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BoxPositionTest {
     @SuppressWarnings("unused") // this method uses a more general data source and not all params are required
-    @ParameterizedTest
-    @DisplayName("Should return the correct index for grid coordinates")
-    @MethodSource("com.mechanitis.sudoku.data.GridBoxAndPositionData#gridCoordinatesBoxCoordinatesAndPosition")
-    void shouldReturnTheCorrectIndexForGridCoordinates(final GridCoords gridCoords, final BoxCoords boxCoords,
-                                                       final int index, final BoxPosition boxPosition) {
-        assertEquals(index, BoxPosition.indexFromCoords(gridCoords));
-    }
-
-    @SuppressWarnings("unused") // this method uses a more general data source and not all params are required
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0} should be \"{3}\"")
     @DisplayName("Should return the correct index for grid coordinates")
     @MethodSource("com.mechanitis.sudoku.data.GridBoxAndPositionData#gridCoordinatesBoxCoordinatesAndPosition")
     void shouldReturnTheCorrectPositionForGridCoordinates(final GridCoords gridCoords, final BoxCoords boxCoords,

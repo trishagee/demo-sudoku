@@ -13,7 +13,9 @@ public class Column implements Block {
     }
 
     /**
-     * @param position the zero-indexed position of the desired Cell
+     * Use this method to get a specific Cell in the Block (Row/Column/Box). This should be an immutable value.
+     *
+     * @param position Zero-based index for the cell
      * @return a copy of the Cell at this position
      */
     public Cell cellAt(int position) {

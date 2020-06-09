@@ -1,5 +1,11 @@
 package com.mechanitis.sudoku.data;
 
+/**
+ * BoxCoords contains the co-ordinates to a value inside a 3x3 box.
+ *
+ * @param row    Values 0 to 2 inclusive allowed
+ * @param column Values 0 to 2 inclusive allowed
+ */
 record BoxCoords(int row, int column) implements Coords {
     public BoxCoords {
         if (row < 0 || column < 0 || row > 2 || column > 2) {

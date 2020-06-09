@@ -2,36 +2,30 @@ package com.mechanitis.sudoku.data;
 
 import java.util.Arrays;
 
+/**
+ * Represents where in the Grid a particular Box is located.
+ */
 enum BoxPosition {
-    TopLeft(0), TopCentre(1), TopRight(2),
-    CentreLeft(3), CentreCentre(4), CentreRight(5),
-    BottomLeft(6), BottomCentre(7), BottomRight(8);
+    TopLeft(new BoxCoords(0, 0)), TopCentre(new BoxCoords(0, 1)), TopRight(new BoxCoords(0, 2)),
+    CentreLeft(new BoxCoords(1, 0)), CentreCentre(new BoxCoords(1, 1)), CentreRight(new BoxCoords(1, 2)),
+    BottomLeft(new BoxCoords(2, 0)), BottomCentre(new BoxCoords(2, 1)), BottomRight(new BoxCoords(2, 2));
 
-    private final int index;
+    private final BoxCoords boxCoords;
 
-    BoxPosition(int index) {
-        this.index = index;
-    }
-
-    static int indexFromCoords(GridCoords gridCoords) {
-        int columnOffset = gridCoords.column() / 3;
-        return switch (gridCoords.row()) {
-            case 0, 1, 2 -> columnOffset;
-            case 3, 4, 5 -> columnOffset + 3;
-            default -> columnOffset + 6;
-        };
+    BoxPosition(BoxCoords boxCoords) {
+        // is this an abuse of BoxCoords? BoxCoords are supposed to reference something in a 3x3 box, which
+        // technically also works with the positions of the boxes inside the Grid. This might currently be a
+        // coincidence rather than a firm correlation. For now make sure the BoxCoords are an implementation detail
+        // hidden inside this class
+        this.boxCoords = boxCoords;
     }
 
     static BoxPosition fromCoords(GridCoords gridCoords) {
-        var index = indexFromCoords(gridCoords);
-        var position = Arrays.stream(values())
-                             .filter(boxPosition -> boxPosition.index == index)
-                             .findFirst();
-        return position.orElseThrow(NoSuchPositionException::new);
-    }
-
-    public int getIndex() {
-        return index;
+        var boxPosition = Arrays.stream(values())
+                                .filter(position -> position.boxCoords.row() == gridCoords.row() / 3)
+                                .filter(position -> position.boxCoords.column() == gridCoords.column() / 3)
+                                .findFirst();
+        return boxPosition.orElseThrow(NoSuchPositionException::new);
     }
 
     /**

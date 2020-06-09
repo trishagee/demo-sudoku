@@ -35,7 +35,12 @@ public class BlockImpl implements Block {
         cells[8] = new Cell(i8);
     }
 
-    @Override
+    /**
+     * Use this method to get a specific Cell in the Block (Row/Column/Box). This should be an immutable value.
+     *
+     * @param position Zero-based index for the cell
+     * @return a copy of the Cell at this position
+     */
     public Cell cellAt(int position) {
         validatePosition(position);
         return Cell.copy(cells[position]);
