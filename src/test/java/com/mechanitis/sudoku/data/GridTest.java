@@ -28,7 +28,7 @@ class GridTest {
     @DisplayName("Should be able to set the value of a specific cell")
     void shouldBeAbleToSetTheValueOfASpecificCell() {
         // when
-        grid.changeCell(row(1), column(3)).toValue(5);
+        grid.setCellValue(row(1), column(3), 5);
 
         // then
         assertEquals(5, grid.cellAt(row(1), column(3)).getValue());
@@ -43,7 +43,7 @@ class GridTest {
 
         @BeforeEach
         void setValueInOneRow() {
-            grid.changeCell(row(rowIndex), column(columnIndex)).toValue(value);
+            grid.setCellValue(row(rowIndex), column(columnIndex), value);
         }
 
         @Test
@@ -62,7 +62,7 @@ class GridTest {
             var column = column(columnIndex);
 
             // when
-            grid.changeCell(row, column).toValue(newValue);
+            grid.setCellValue(row, column, newValue);
 
             // then
             assertEquals(newValue, grid.cellAt(row, column).getValue());
@@ -86,21 +86,21 @@ class GridTest {
             @DisplayName("when trying to insert a value that is already duplicated in the row")
             void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheRow() {
                 assertThrows(DuplicateValueException.class,
-                             () -> grid.changeCell(row(rowIndex), column(8)).toValue(value));
+                             () -> grid.setCellValue(row(rowIndex), column(8), value));
             }
 
             @Test
             @DisplayName("when trying to insert a value that is already duplicated in the column")
             void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheColumn() {
                 assertThrows(DuplicateValueException.class,
-                             () -> grid.changeCell(row(8), column(columnIndex)).toValue(value));
+                             () -> grid.setCellValue(row(8), column(columnIndex), value));
             }
 
             @Test
             @DisplayName("when trying to insert a value that is already duplicated in the box")
             void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheBox() {
                 assertThrows(DuplicateValueException.class,
-                             () -> grid.changeCell(row(8), column(4)).toValue(value));
+                             () -> grid.setCellValue(row(8), column(4), value));
             }
         }
     }
@@ -142,7 +142,7 @@ class GridTest {
         GridCoords gridCoords = new GridCoords(rowIndex, columnIndex);
         var row = row(rowIndex);
         var column = column(columnIndex);
-        grid.changeCell(row, column).toValue(value);
+        grid.setCellValue(row, column, value);
 
         assertEquals(value, grid.cellAt(row, column).getValue());
         assertEquals(value, grid.rowAt(rowIndex).cellAt(columnIndex).getValue());
@@ -167,7 +167,7 @@ class GridTest {
     void shouldBeAbleToSetAValueAndReadItFromTheBox() {
         int expectedValue = 1;
         GridCoords gridCoords = new GridCoords(7, 8);
-        grid.changeCell(row(7), column(8)).toValue(expectedValue);
+        grid.setCellValue(row(7), column(8), expectedValue);
 
         // not sure at the moment if we need to be able to access by both types of coords. I would think that from
         // the Grid one would expect to access purely by gridCoords
@@ -177,15 +177,15 @@ class GridTest {
     }
 
     private void insertValuesIntoFirstCellOfEachBox() {
-        grid.changeCell(row(0), column(0)).toValue(1);
-        grid.changeCell(row(0), column(3)).toValue(2);
-        grid.changeCell(row(0), column(6)).toValue(3);
-        grid.changeCell(row(3), column(0)).toValue(4);
-        grid.changeCell(row(3), column(3)).toValue(5);
-        grid.changeCell(row(3), column(6)).toValue(6);
-        grid.changeCell(row(6), column(0)).toValue(7);
-        grid.changeCell(row(6), column(3)).toValue(8);
-        grid.changeCell(row(6), column(6)).toValue(9);
+        grid.setCellValue(row(0), column(0), 1);
+        grid.setCellValue(row(0), column(3), 2);
+        grid.setCellValue(row(0), column(6), 3);
+        grid.setCellValue(row(3), column(0), 4);
+        grid.setCellValue(row(3), column(3), 5);
+        grid.setCellValue(row(3), column(6), 6);
+        grid.setCellValue(row(6), column(0), 7);
+        grid.setCellValue(row(6), column(3), 8);
+        grid.setCellValue(row(6), column(6), 9);
     }
 
     static Stream<Arguments> positionAndValueProvider() {

@@ -37,25 +37,10 @@ public class Grid {
         return rows[row.index()].cellAt(column.index());
     }
 
-    public Mutator changeCell(RowIndex row, ColumnIndex column) {
-        return new Mutator(row, column);
-    }
-
-    // TODO: not sure still if we need the mutator. I do like the API this way though
-    public class Mutator {
-        private final RowIndex row;
-        private final ColumnIndex column;
-
-        private Mutator(RowIndex row, ColumnIndex column) {
-            this.row = row;
-            this.column = column;
-        }
-
-        public void toValue(int value) {
-            rows[row.index()].changeCell(column.index()).toValue(value);
-            columns[column.index()].changeCell(row.index()).toValue(value);
-            boxes.get(BoxPosition.fromIndices(row, column)).changeCell(BoxCoords.fromIndices(row, column)).toValue(value);
-        }
+    public void setCellValue(RowIndex row, ColumnIndex column, int value) {
+        rows[row.index()].changeCell(column.index()).toValue(value);
+        columns[column.index()].changeCell(row.index()).toValue(value);
+        boxes.get(BoxPosition.fromIndices(row, column)).changeCell(BoxCoords.fromIndices(row, column)).toValue(value);
     }
 
 }
