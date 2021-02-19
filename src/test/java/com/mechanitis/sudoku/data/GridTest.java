@@ -18,8 +18,8 @@ class GridTest {
     private final Grid grid = new Grid();
 
     @Test
-    @DisplayName("Should be able to get a specific cell with grid coords")
-    void shouldBeAbleToGetASpecificCellWithGridCoords() {
+    @DisplayName("Should be able to get a specific cell with row and column index")
+    void shouldBeAbleToGetASpecificCellWithRowAndColumnIndex() {
         Cell cell = grid.cellAt(row(0), column(0));
         assertNotNull(cell);
     }
@@ -57,7 +57,6 @@ class GridTest {
         void shouldBeAbleToChangeAValue() {
             // given
             int newValue = 9;
-            var gridCoords = new GridCoords(rowIndex, columnIndex);
             var row = row(rowIndex);
             var column = column(columnIndex);
 
@@ -139,7 +138,6 @@ class GridTest {
         int value = 7;
         int rowIndex = 4;
         int columnIndex = 1;
-        GridCoords gridCoords = new GridCoords(rowIndex, columnIndex);
         var row = row(rowIndex);
         var column = column(columnIndex);
         grid.setCellValue(row, column, value);
@@ -147,7 +145,7 @@ class GridTest {
         assertEquals(value, grid.cellAt(row, column).getValue());
         assertEquals(value, grid.rowAt(rowIndex).cellAt(columnIndex).getValue());
         assertEquals(value, grid.columnAt(columnIndex).cellAt(rowIndex).getValue());
-        assertEquals(value, grid.boxAt(CentreLeft).cellAt(gridCoords).getValue());
+        assertEquals(value, grid.boxAt(CentreLeft).cellAt(row, column).getValue());
     }
 
     @DisplayName("Should get the correct box for a position")
@@ -166,14 +164,14 @@ class GridTest {
     @DisplayName("Should be able to set a value and read it from the box")
     void shouldBeAbleToSetAValueAndReadItFromTheBox() {
         int expectedValue = 1;
-        GridCoords gridCoords = new GridCoords(7, 8);
-        grid.setCellValue(row(7), column(8), expectedValue);
+        var row = row(7);
+        var column = column(8);
+        grid.setCellValue(row, column, expectedValue);
 
-        // not sure at the moment if we need to be able to access by both types of coords. I would think that from
-        // the Grid one would expect to access purely by gridCoords
+        // not sure at the moment if we need to be able to access by both types of coords
         BoxCoords boxCoords = new BoxCoords(1, 2);
         assertEquals(expectedValue, grid.boxAt(BottomRight).cellAt(boxCoords).getValue());
-        assertEquals(expectedValue, grid.boxAt(BottomRight).cellAt(gridCoords).getValue());
+        assertEquals(expectedValue, grid.boxAt(BottomRight).cellAt(row, column).getValue());
     }
 
     private void insertValuesIntoFirstCellOfEachBox() {

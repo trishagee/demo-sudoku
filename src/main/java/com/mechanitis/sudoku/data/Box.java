@@ -47,8 +47,8 @@ public class Box implements Block {
         return block.spliterator();
     }
 
-    Cell cellAt(GridCoords gridCoords) {
-        return cellAt(gridCoords.toBoxCoords());
+    Cell cellAt(RowIndex row, ColumnIndex column) {
+        return cellAt(BoxCoords.fromIndices(row, column));
     }
 
     Cell cellAt(BoxCoords boxCoords) {
