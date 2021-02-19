@@ -17,8 +17,9 @@ public class Generator {
         for (int i = 0; i <= 17; i++) {
             Random random = new Random();
             try {
-                grid.changeCell(new GridCoords(random.nextInt(9), random.nextInt(9)))
-                        .toValue(random.nextInt(9)+1);
+                grid.changeCell(new GridCoords(random.nextInt(9),
+                                               random.nextInt(9)))
+                    .toValue(random.nextInt(9) + 1);
             } catch (DuplicateValueException e) {
                 //brute force: try again
             }
