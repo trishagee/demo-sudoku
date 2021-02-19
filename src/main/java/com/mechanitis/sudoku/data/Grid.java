@@ -35,8 +35,8 @@ public class Grid {
         return boxes.get(boxPosition);
     }
 
-    public Cell cellAt(GridCoords gridCoords) {
-        return rows[gridCoords.row()].cellAt(gridCoords.column());
+    public Cell cellAt(RowIndex row, ColumnIndex column) {
+        return rows[row.index()].cellAt(column.index());
     }
 
     public Mutator changeCell(RowIndex row, ColumnIndex column) {

@@ -20,8 +20,7 @@ class GridTest {
     @Test
     @DisplayName("Should be able to get a specific cell with grid coords")
     void shouldBeAbleToGetASpecificCellWithGridCoords() {
-        //(maybe microtypes are useful for this?)
-        Cell cell = grid.cellAt(new GridCoords(0, 0));
+        Cell cell = grid.cellAt(row(0), column(0));
         assertNotNull(cell);
     }
 
@@ -32,7 +31,7 @@ class GridTest {
         grid.changeCell(row(1), column(3)).toValue(5);
 
         // then
-        assertEquals(5, grid.cellAt(new GridCoords(1, 3)).getValue());
+        assertEquals(5, grid.cellAt(row(1), column(3)).getValue());
     }
 
     @Nested
@@ -50,7 +49,7 @@ class GridTest {
         @Test
         @DisplayName("Should get the correct existing value")
         void getTheCorrectExistingValue() {
-            assertEquals(value, grid.cellAt(new GridCoords(rowIndex, columnIndex)).getValue());
+            assertEquals(value, grid.cellAt(row(rowIndex), column(columnIndex)).getValue());
         }
 
         @Test
@@ -59,20 +58,22 @@ class GridTest {
             // given
             int newValue = 9;
             var gridCoords = new GridCoords(rowIndex, columnIndex);
+            var row = row(rowIndex);
+            var column = column(columnIndex);
 
             // when
-            grid.changeCell(row(rowIndex), column(columnIndex)).toValue(newValue);
+            grid.changeCell(row, column).toValue(newValue);
 
             // then
-            assertEquals(newValue, grid.cellAt(gridCoords).getValue());
+            assertEquals(newValue, grid.cellAt(row, column).getValue());
         }
 
         @Test
         @DisplayName("Should not be able to change a value by accessing the cell directly")
         void shouldNotBeAbleToChangeAValueUsingCellAt() {
-            grid.cellAt(new GridCoords(rowIndex, columnIndex)).setValue(9);
+            grid.cellAt(row(rowIndex), column(columnIndex)).setValue(9);
 
-            assertEquals(value, grid.cellAt(new GridCoords(rowIndex, columnIndex)).getValue());
+            assertEquals(value, grid.cellAt(row(rowIndex), column(columnIndex)).getValue());
         }
 
         @Nested
@@ -85,27 +86,21 @@ class GridTest {
             @DisplayName("when trying to insert a value that is already duplicated in the row")
             void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheRow() {
                 assertThrows(DuplicateValueException.class,
-                             () -> {
-                                 grid.changeCell(row(rowIndex), column(8)).toValue(value);
-                             });
+                             () -> grid.changeCell(row(rowIndex), column(8)).toValue(value));
             }
 
             @Test
             @DisplayName("when trying to insert a value that is already duplicated in the column")
             void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheColumn() {
                 assertThrows(DuplicateValueException.class,
-                             () -> {
-                                 grid.changeCell(row(8), column(columnIndex)).toValue(value);
-                             });
+                             () -> grid.changeCell(row(8), column(columnIndex)).toValue(value));
             }
 
             @Test
             @DisplayName("when trying to insert a value that is already duplicated in the box")
             void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheBox() {
                 assertThrows(DuplicateValueException.class,
-                             () -> {
-                                 grid.changeCell(row(8), column(4)).toValue(value);
-                             });
+                             () -> grid.changeCell(row(8), column(4)).toValue(value));
             }
         }
     }
@@ -145,9 +140,11 @@ class GridTest {
         int rowIndex = 4;
         int columnIndex = 1;
         GridCoords gridCoords = new GridCoords(rowIndex, columnIndex);
-        grid.changeCell(row(rowIndex), column(columnIndex)).toValue(value);
+        var row = row(rowIndex);
+        var column = column(columnIndex);
+        grid.changeCell(row, column).toValue(value);
 
-        assertEquals(value, grid.cellAt(gridCoords).getValue());
+        assertEquals(value, grid.cellAt(row, column).getValue());
         assertEquals(value, grid.rowAt(rowIndex).cellAt(columnIndex).getValue());
         assertEquals(value, grid.columnAt(columnIndex).cellAt(rowIndex).getValue());
         assertEquals(value, grid.boxAt(CentreLeft).cellAt(gridCoords).getValue());
