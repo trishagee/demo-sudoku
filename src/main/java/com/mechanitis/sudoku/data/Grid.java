@@ -41,6 +41,10 @@ public class Grid {
         return new Mutator(gridCoords);
     }
 
+    public int getNumberOfFilledSquares() {
+        return 0;
+    }
+
     // TODO: not sure still if we need the mutator. I do like the API this way though
     public class Mutator {
         private final GridCoords gridCoords;
