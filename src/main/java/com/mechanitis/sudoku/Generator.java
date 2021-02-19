@@ -14,7 +14,7 @@ public class Generator {
     public Generator() {
         grid = new Grid();
 
-        for (int i = 0; i <= 17; i++) {
+        while (grid.getNumberOfFilledSquares() <= 17) {
             Random random = new Random();
             try {
                 grid.changeCell(new GridCoords(random.nextInt(9),

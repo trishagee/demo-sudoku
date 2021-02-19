@@ -1,6 +1,5 @@
 package com.mechanitis.sudoku;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +12,6 @@ class GeneratorTest {
 
     @Test
     @DisplayName("Should have at least 17 items in the generated puzzle")
-    @Disabled("not implemented yet")
     void shouldHaveAtLeast17ItemsInTheGeneratedPuzzle() {
         Generator generator = new Generator();
 
