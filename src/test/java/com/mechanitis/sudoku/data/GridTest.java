@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
@@ -33,7 +34,7 @@ class GridTest {
     }
 
     @Nested
-    @DisplayName("When the grid contains some values")
+    @DisplayName("When the grid contain a value")
     class WhenValuesExist {
         private final int columnIndex = 3;
         private final int value = 5;
@@ -48,6 +49,13 @@ class GridTest {
         @DisplayName("Should get the correct existing value")
         void getTheCorrectExistingValue() {
             assertEquals(value, grid.cellAt(new GridCoords(rowIndex, columnIndex)).getValue());
+        }
+
+        @Test
+        @DisplayName("Should have one filled square")
+        @Disabled("not implemented yet")
+        void shouldKnowItHasOneFilledSquare() {
+            assertEquals(1, grid.getNumberOfFilledSquares());
         }
 
         @Test
@@ -99,6 +107,19 @@ class GridTest {
                         () -> grid.changeCell(new GridCoords(8, 4)).toValue(value));
             }
         }
+    }
+
+    @DisplayName("Should return the correct number of filled squares")
+    @ParameterizedTest(name = "{0}")
+    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
+    @Disabled("not implemented yet")
+    void shouldReturnTheCorrectNumberOfFilledSquares(int numberOfValues) {
+        Grid grid = new Grid();
+        for (int i = 0; i < numberOfValues; i++) {
+            grid.changeCell(new GridCoords(i, i)).toValue(i+1);
+        }
+        System.out.println("grid = " + grid);
+        assertEquals(numberOfValues, grid.getNumberOfFilledSquares());
     }
 
     @Test
