@@ -42,14 +42,14 @@ public class Grid {
     }
 
     // TODO: not sure still if we need the mutator. I do like the API this way though
-    class Mutator {
+    public class Mutator {
         private final GridCoords gridCoords;
 
         private Mutator(GridCoords gridCoords) {
             this.gridCoords = gridCoords;
         }
 
-        void toValue(int value) {
+        public void toValue(int value) {
             rows[gridCoords.row()].changeCell(gridCoords.column()).toValue(value);
             columns[gridCoords.column()].changeCell(gridCoords.row()).toValue(value);
             boxes.get(BoxPosition.fromCoords(gridCoords)).changeCell(gridCoords.toBoxCoords()).toValue(value);

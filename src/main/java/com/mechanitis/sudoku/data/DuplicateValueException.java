@@ -2,7 +2,7 @@ package com.mechanitis.sudoku.data;
 
 import static java.lang.String.format;
 
-class DuplicateValueException extends RuntimeException {
+public class DuplicateValueException extends RuntimeException {
     @SuppressWarnings("FieldCanBeLocal")
     private final int value;
 
