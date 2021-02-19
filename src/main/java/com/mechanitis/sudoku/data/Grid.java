@@ -3,8 +3,6 @@ package com.mechanitis.sudoku.data;
 import java.util.Map;
 
 import static com.mechanitis.sudoku.data.BoxPosition.*;
-import static com.mechanitis.sudoku.data.ColumnIndex.column;
-import static com.mechanitis.sudoku.data.RowIndex.row;
 
 public class Grid {
     private static final int SIZE = 9;
@@ -47,11 +45,6 @@ public class Grid {
     public class Mutator {
         private final RowIndex row;
         private final ColumnIndex column;
-
-        private Mutator(GridCoords gridCoords) {
-            this.row = gridCoords.rowIndex();
-            this.column = gridCoords.columnIndex();
-        }
 
         private Mutator(RowIndex row, ColumnIndex column) {
             this.row = row;
