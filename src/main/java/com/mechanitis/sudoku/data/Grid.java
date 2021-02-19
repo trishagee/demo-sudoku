@@ -42,7 +42,15 @@ public class Grid {
     }
 
     public int getNumberOfFilledSquares() {
-        return 0;
+        int count = 0;
+        for (Row row : rows) {
+            for (Cell cell : row) {
+                if (!cell.isEmpty()) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     // TODO: not sure still if we need the mutator. I do like the API this way though
@@ -60,4 +68,16 @@ public class Grid {
         }
     }
 
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        for (Row row : rows) {
+            sb.append("[");
+            for (Cell cell : row) {
+                sb.append(cell.getValue()).append(" ");
+            }
+            sb.append("]\n");
+        }
+        return sb.toString();
+    }
 }
