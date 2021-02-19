@@ -44,6 +44,14 @@ public class Grid {
     }
 
     public int getNumberOfFilledSquares() {
-        return 0;
+        int count = 0;
+        for (Row row : rows) {
+            for (Cell cell : row) {
+                if (!cell.isEmpty()) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 }

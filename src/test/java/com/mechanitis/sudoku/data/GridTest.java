@@ -114,7 +114,6 @@ class GridTest {
     @DisplayName("Should return the correct number of filled squares")
     @ParameterizedTest(name = "{0}")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
-    @Disabled("not implemented yet")
     void shouldReturnTheCorrectNumberOfFilledSquares(int numberOfValues) {
         Grid grid = new Grid();
         for (int i = 0; i < numberOfValues; i++) {
