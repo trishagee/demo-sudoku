@@ -35,7 +35,7 @@ class GridTest {
     }
 
     @Nested
-    @DisplayName("When the grid contain a value")
+    @DisplayName("When the grid contains a value")
     class WhenValuesExist {
         private final int columnIndex = 3;
         private final int value = 5;
@@ -50,6 +50,13 @@ class GridTest {
         @DisplayName("Should get the correct existing value")
         void getTheCorrectExistingValue() {
             assertEquals(value, grid.cellAt(row(rowIndex), column(columnIndex)).getValue());
+        }
+
+        @Test
+        @DisplayName("Should have one filled square")
+        @Disabled("not implemented yet")
+        void shouldKnowItHasOneFilledSquare() {
+            assertEquals(1, grid.getNumberOfFilledSquares());
         }
 
         @Test
@@ -102,6 +109,19 @@ class GridTest {
                              () -> grid.setCellValue(row(8), column(4), value));
             }
         }
+    }
+
+    @DisplayName("Should return the correct number of filled squares")
+    @ParameterizedTest(name = "{0}")
+    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
+    @Disabled("not implemented yet")
+    void shouldReturnTheCorrectNumberOfFilledSquares(int numberOfValues) {
+        Grid grid = new Grid();
+        for (int i = 0; i < numberOfValues; i++) {
+            grid.setCellValue(row(i), column(i), i + 1);
+        }
+        System.out.println("grid = " + grid);
+        assertEquals(numberOfValues, grid.getNumberOfFilledSquares());
     }
 
     @Test

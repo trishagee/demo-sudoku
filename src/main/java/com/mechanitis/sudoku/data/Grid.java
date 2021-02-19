@@ -43,4 +43,7 @@ public class Grid {
         boxes.get(BoxPosition.fromIndices(row, column)).changeCell(BoxCoords.fromIndices(row, column)).toValue(value);
     }
 
+    public int getNumberOfFilledSquares() {
+        return 0;
+    }
 }
