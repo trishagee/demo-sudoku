@@ -20,14 +20,6 @@ enum BoxPosition {
         this.boxCoords = boxCoords;
     }
 
-    static BoxPosition fromCoords(GridCoords gridCoords) {
-        var boxPosition = Arrays.stream(values())
-                                .filter(position -> position.boxCoords.row() == gridCoords.row() / 3)
-                                .filter(position -> position.boxCoords.column() == gridCoords.column() / 3)
-                                .findFirst();
-        return boxPosition.orElseThrow(NoSuchPositionException::new);
-    }
-
     static BoxPosition fromIndices(RowIndex row, ColumnIndex column) {
         var boxPosition = Arrays.stream(values())
                                 .filter(position -> position.boxCoords.row() == row.index() / 3)

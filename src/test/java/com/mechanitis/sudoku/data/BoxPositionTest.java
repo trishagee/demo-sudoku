@@ -11,8 +11,9 @@ class BoxPositionTest {
     @ParameterizedTest(name = "{0} should be \"{3}\"")
     @DisplayName("Should return the correct index for grid coordinates")
     @MethodSource("com.mechanitis.sudoku.data.GridBoxAndPositionData#gridCoordinatesBoxCoordinatesAndPosition")
-    void shouldReturnTheCorrectPositionForGridCoordinates(final GridCoords gridCoords, final BoxCoords boxCoords,
+    void shouldReturnTheCorrectPositionForGridCoordinates(final RowIndex row, final ColumnIndex column,
+                                                          final BoxCoords boxCoords,
                                                           final int index, final BoxPosition boxPosition) {
-        assertEquals(boxPosition, BoxPosition.fromCoords(gridCoords));
+        assertEquals(boxPosition, BoxPosition.fromIndices(row, column));
     }
 }
