@@ -39,10 +39,6 @@ public class Grid {
         return rows[gridCoords.row()].cellAt(gridCoords.column());
     }
 
-    public Mutator changeCell(GridCoords gridCoords) {
-        return new Mutator(row(gridCoords.row()), column(gridCoords.column()));
-    }
-
     public Mutator changeCell(RowIndex row, ColumnIndex column) {
         return new Mutator(row, column);
     }

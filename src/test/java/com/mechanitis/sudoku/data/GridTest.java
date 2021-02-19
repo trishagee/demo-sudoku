@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
@@ -35,7 +36,7 @@ class GridTest {
     }
 
     @Nested
-    @DisplayName("When the grid contains some values")
+    @DisplayName("When the grid contain a value")
     class WhenValuesExist {
         private final int columnIndex = 3;
         private final int value = 5;
@@ -43,7 +44,7 @@ class GridTest {
 
         @BeforeEach
         void setValueInOneRow() {
-            grid.changeCell(new GridCoords(rowIndex, columnIndex)).toValue(value);
+            grid.changeCell(row(rowIndex), column(columnIndex)).toValue(value);
         }
 
         @Test
@@ -60,7 +61,7 @@ class GridTest {
             var gridCoords = new GridCoords(rowIndex, columnIndex);
 
             // when
-            grid.changeCell(gridCoords).toValue(newValue);
+            grid.changeCell(row(rowIndex), column(columnIndex)).toValue(newValue);
 
             // then
             assertEquals(newValue, grid.cellAt(gridCoords).getValue());
@@ -84,21 +85,27 @@ class GridTest {
             @DisplayName("when trying to insert a value that is already duplicated in the row")
             void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheRow() {
                 assertThrows(DuplicateValueException.class,
-                        () -> grid.changeCell(new GridCoords(rowIndex, 8)).toValue(value));
+                             () -> {
+                                 grid.changeCell(row(rowIndex), column(8)).toValue(value);
+                             });
             }
 
             @Test
             @DisplayName("when trying to insert a value that is already duplicated in the column")
             void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheColumn() {
                 assertThrows(DuplicateValueException.class,
-                        () -> grid.changeCell(new GridCoords(8, columnIndex)).toValue(value));
+                             () -> {
+                                 grid.changeCell(row(8), column(columnIndex)).toValue(value);
+                             });
             }
 
             @Test
             @DisplayName("when trying to insert a value that is already duplicated in the box")
             void shouldErrorIfTryingToInsertAValueThatIsAlreadyDuplicatedInTheBox() {
                 assertThrows(DuplicateValueException.class,
-                        () -> grid.changeCell(new GridCoords(8, 4)).toValue(value));
+                             () -> {
+                                 grid.changeCell(row(8), column(4)).toValue(value);
+                             });
             }
         }
     }
@@ -138,7 +145,7 @@ class GridTest {
         int rowIndex = 4;
         int columnIndex = 1;
         GridCoords gridCoords = new GridCoords(rowIndex, columnIndex);
-        grid.changeCell(gridCoords).toValue(value);
+        grid.changeCell(row(rowIndex), column(columnIndex)).toValue(value);
 
         assertEquals(value, grid.cellAt(gridCoords).getValue());
         assertEquals(value, grid.rowAt(rowIndex).cellAt(columnIndex).getValue());
@@ -163,7 +170,7 @@ class GridTest {
     void shouldBeAbleToSetAValueAndReadItFromTheBox() {
         int expectedValue = 1;
         GridCoords gridCoords = new GridCoords(7, 8);
-        grid.changeCell(gridCoords).toValue(expectedValue);
+        grid.changeCell(row(7), column(8)).toValue(expectedValue);
 
         // not sure at the moment if we need to be able to access by both types of coords. I would think that from
         // the Grid one would expect to access purely by gridCoords
@@ -173,15 +180,15 @@ class GridTest {
     }
 
     private void insertValuesIntoFirstCellOfEachBox() {
-        grid.changeCell(new GridCoords(0, 0)).toValue(1);
-        grid.changeCell(new GridCoords(0, 3)).toValue(2);
-        grid.changeCell(new GridCoords(0, 6)).toValue(3);
-        grid.changeCell(new GridCoords(3, 0)).toValue(4);
-        grid.changeCell(new GridCoords(3, 3)).toValue(5);
-        grid.changeCell(new GridCoords(3, 6)).toValue(6);
-        grid.changeCell(new GridCoords(6, 0)).toValue(7);
-        grid.changeCell(new GridCoords(6, 3)).toValue(8);
-        grid.changeCell(new GridCoords(6, 6)).toValue(9);
+        grid.changeCell(row(0), column(0)).toValue(1);
+        grid.changeCell(row(0), column(3)).toValue(2);
+        grid.changeCell(row(0), column(6)).toValue(3);
+        grid.changeCell(row(3), column(0)).toValue(4);
+        grid.changeCell(row(3), column(3)).toValue(5);
+        grid.changeCell(row(3), column(6)).toValue(6);
+        grid.changeCell(row(6), column(0)).toValue(7);
+        grid.changeCell(row(6), column(3)).toValue(8);
+        grid.changeCell(row(6), column(6)).toValue(9);
     }
 
     static Stream<Arguments> positionAndValueProvider() {
