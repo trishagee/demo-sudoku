@@ -3,6 +3,8 @@ package com.mechanitis.sudoku.data;
 import java.util.Map;
 
 import static com.mechanitis.sudoku.data.BoxPosition.*;
+import static com.mechanitis.sudoku.data.ColumnIndex.column;
+import static com.mechanitis.sudoku.data.RowIndex.row;
 
 public class Grid {
     private static final int SIZE = 9;
@@ -38,21 +40,32 @@ public class Grid {
     }
 
     public Mutator changeCell(GridCoords gridCoords) {
-        return new Mutator(gridCoords);
+        return new Mutator(row(gridCoords.row()), column(gridCoords.column()));
+    }
+
+    public Mutator changeCell(RowIndex row, ColumnIndex column) {
+        return new Mutator(row, column);
     }
 
     // TODO: not sure still if we need the mutator. I do like the API this way though
     public class Mutator {
-        private final GridCoords gridCoords;
+        private final RowIndex row;
+        private final ColumnIndex column;
 
         private Mutator(GridCoords gridCoords) {
-            this.gridCoords = gridCoords;
+            this.row = gridCoords.rowIndex();
+            this.column = gridCoords.columnIndex();
+        }
+
+        private Mutator(RowIndex row, ColumnIndex column) {
+            this.row = row;
+            this.column = column;
         }
 
         public void toValue(int value) {
-            rows[gridCoords.row()].changeCell(gridCoords.column()).toValue(value);
-            columns[gridCoords.column()].changeCell(gridCoords.row()).toValue(value);
-            boxes.get(BoxPosition.fromCoords(gridCoords)).changeCell(gridCoords.toBoxCoords()).toValue(value);
+            rows[row.index()].changeCell(column.index()).toValue(value);
+            columns[column.index()].changeCell(row.index()).toValue(value);
+            boxes.get(BoxPosition.fromIndices(row, column)).changeCell(BoxCoords.fromIndices(row, column)).toValue(value);
         }
     }
 

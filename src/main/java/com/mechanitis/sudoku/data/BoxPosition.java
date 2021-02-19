@@ -28,6 +28,14 @@ enum BoxPosition {
         return boxPosition.orElseThrow(NoSuchPositionException::new);
     }
 
+    static BoxPosition fromIndices(RowIndex row, ColumnIndex column) {
+        var boxPosition = Arrays.stream(values())
+                                .filter(position -> position.boxCoords.row() == row.index() / 3)
+                                .filter(position -> position.boxCoords.column() == column.index() / 3)
+                                .findFirst();
+        return boxPosition.orElseThrow(NoSuchPositionException::new);
+    }
+
     /**
      * This should never happen, as there should not be a set of coordinates that does not correspond to a position
      */

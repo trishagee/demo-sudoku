@@ -13,4 +13,8 @@ record BoxCoords(int row, int column) implements Coords {
         }
     }
 
+    static BoxCoords fromIndices(RowIndex row, ColumnIndex column) {
+        return new BoxCoords(row.index() % 3, column.index() % 3);
+    }
+
 }

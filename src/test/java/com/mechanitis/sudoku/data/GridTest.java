@@ -8,6 +8,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static com.mechanitis.sudoku.data.BoxPosition.*;
+import static com.mechanitis.sudoku.data.ColumnIndex.column;
+import static com.mechanitis.sudoku.data.RowIndex.row;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
@@ -26,7 +28,7 @@ class GridTest {
     @DisplayName("Should be able to set the value of a specific cell")
     void shouldBeAbleToSetTheValueOfASpecificCell() {
         // when
-        grid.changeCell(new GridCoords(1, 3)).toValue(5);
+        grid.changeCell(row(1), column(3)).toValue(5);
 
         // then
         assertEquals(5, grid.cellAt(new GridCoords(1, 3)).getValue());
