@@ -23,19 +23,21 @@ public class Generator {
         Random random = new Random();
         while (grid.getNumberOfFilledSquares() <= minNumberOfValues) {
             try {
-                grid.setCellValue(row(generateRandomIndex(random)), column(generateRandomIndex(random)), generateRandomValue(random));
+                grid.setCellValue(row(randomIndex(random)),
+                                  column(randomIndex(random)),
+                                  randomValue(random));
             } catch (DuplicateValueException e) {
                 // brute force, continue and try again
             }
         }
     }
 
-    private int generateRandomValue(Random random) {
-        return random.nextInt(9) + 1;
+    private int randomIndex(final Random random) {
+        return random.nextInt(9);
     }
 
-    private int generateRandomIndex(Random random) {
-        return random.nextInt(9);
+    private int randomValue(final Random random) {
+        return random.nextInt(9) + 1;
     }
 
     public Grid getPuzzle() {
